@@ -70,7 +70,7 @@ export default function Footer() {
         className={classes.container}
       >
         <Container maxWidth='lg'>
-          <Grid container spacing={.5} >
+          <Grid container spacing={1} >
             <Grid item xs={10} sm={10} md={11} >
               <h1 className={classes.appbarTitle} >
                 UCL<span className={classes.colorText}>App</span>

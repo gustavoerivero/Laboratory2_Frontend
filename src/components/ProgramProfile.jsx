@@ -99,7 +99,7 @@ export default function ProgramProfile({ id }) {
           {
             pensum.length > 0 ?
               pensum.map((element) => (
-                <Grid item>
+                <Grid item key={element.id}>
                   <PensumCard
                     id={element.id}
                     title={element.name}

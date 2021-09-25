@@ -44,8 +44,6 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
 
   const classes = useStyles();
 
-  const date = new Date();
-
   const viewCard = (value) => {
     console.log(value);
     handleView(value);
@@ -59,6 +57,7 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
             haveColor &&
             <CardMedia
               className={classes.media}
+              component={Typography}
             />
           }
           <CardContent>
@@ -67,9 +66,6 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
               {content}
-            </Typography>
-            <Typography variant='caption'>
-              {date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear()}
             </Typography>
           </CardContent>
         </CardActionArea>

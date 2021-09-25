@@ -97,7 +97,7 @@ const Login = () => {
               }}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12} align='center'>
             <Button
               variant='contained'
               disabled={user.length > 0 && pass.length >= 8 ? false : true}

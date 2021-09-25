@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
-import { CssBaseline, Fab, Grid, Paper, Tooltip, Typography } from '@material-ui/core';
+import {
+  Button,
+  CssBaseline,
+  Fab,
+  Grid,
+  Paper,
+  Tooltip,
+  Typography
+} from '@material-ui/core';
 import NavBar from '../components/NavBar';
 import ColorCard from '../components/ColorCard';
 import ProgramProfile from '../components/ProgramProfile';
+import ProgramDialog from '../components/ProgramDialog';
 import Footer from '../components/Footer';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -35,28 +44,28 @@ export default function Home() {
   const data = [
     {
       id: '0',
-      title: 'Ing. en Informática',
-      desc: 'Carrera de Ing. Inf',
+      title: 'ING-INF',
+      desc: 'Ingeniería en Informática',
     },
     {
       id: '1',
-      title: 'Ing. en Producción',
-      desc: 'Carrera de Ing. Prod',
+      title: 'ING-PRO',
+      desc: 'Ingeniería de Producción',
     },
     {
       id: '2',
-      title: 'Lic. en Física',
-      desc: 'Carrera de Lic. Física',
+      title: 'LIC-FIS',
+      desc: 'Licenciatura en Física',
     },
     {
       id: '3',
-      title: 'Lic. en Matemática',
-      desc: 'Carrera de Lic. Matemática'
+      title: 'LIC-MAT',
+      desc: 'Licenciatura en Matemática'
     },
     {
       id: '4',
-      title: 'Ing. en Telemática',
-      desc: 'Carrera de Ing. Telem.',
+      title: 'ING-TEL',
+      desc: 'Ingeniería en Telemática',
     },
   ];
 
@@ -65,7 +74,13 @@ export default function Home() {
   const [auth, setAuth] = useState(true);
   const [admin, setAdmin] = useState(true);
 
+  const [open, setOpen] = useState(false);
+
   const [programSelect, setProgramSelect] = useState(null);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  }
 
   return (
     <div>
@@ -88,13 +103,21 @@ export default function Home() {
               </Grid>
               <Grid item xs={2} align='right'>
                 <Tooltip title='Agregar programa' placement='right-start'>
-                  <Fab size='small' color='secondary' aria-label='add'>
+                  <Fab size='small' color='secondary' aria-label='add' component={Button} onClick={handleOpen}>
                     <AddIcon />
                   </Fab>
                 </Tooltip>
+                <ProgramDialog
+                  nameFunction='Agregar programa'
+                  contentFunction='Ingrese la información del programa a agregar. 
+                    El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
+                  buttonFunctionName='Agregar'
+                  handleOpen={handleOpen}
+                  open={open}
+                />
               </Grid>
               {data.length > 0 ? data.map((element) => (
-                <Grid item>
+                <Grid item key={element.id}>
                   <ColorCard
                     id={element.id}
                     title={element.title}
@@ -132,7 +155,7 @@ export default function Home() {
                     No se ha seleccionado ningún programa aún.
                   </Typography>
                   :
-                  <ProgramProfile 
+                  <ProgramProfile
                     id={programSelect}
                   />
                 }

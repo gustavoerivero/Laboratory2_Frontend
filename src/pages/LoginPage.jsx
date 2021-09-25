@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
       width: '40%',
     },
   },
+  footer: {
+    marginTop: '2em',
+  },
 }))
 
 export default function LoginPage() {
@@ -48,7 +51,7 @@ export default function LoginPage() {
           <Login />
         </Grid>
       </Grid>
-      <Footer />
+      <Footer className={classes.footer} />
     </div>
   );
 }
