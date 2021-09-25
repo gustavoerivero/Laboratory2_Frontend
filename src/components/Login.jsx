@@ -103,6 +103,9 @@ const Login = () => {
               disabled={user.length > 0 && pass.length >= 8 ? false : true}
               component={Link}
               href='/'
+              to={{
+                pathname: '/Home',
+              }}
               color='primary'
               className={classes.button}
             >

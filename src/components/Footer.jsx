@@ -25,18 +25,18 @@ const useStyles = makeStyles((theme) => ({
     opacity: 1,
   },
   team: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     fontFamily: 'Nunito',
     fontWeight: 'bold',
     fontSize: '1rem'
   },
   slogan: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     fontFamily: 'Nunito',
     fontWeight: 'bold',
   },
   firstLink: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     fontFamily: 'Nunito',
     fontWeight: 'bold',
     fontSize: '1rem',
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '1em',
   },
   lastLink: {
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     fontFamily: 'Nunito',
     fontWeight: 'bold',
     fontSize: '1rem',
@@ -84,7 +84,6 @@ export default function Footer() {
             <Grid item xs={12} >
               <Link
                 href='/'
-                color='inherit'
                 className={classes.firstLink}
                 underline='none'
               >
