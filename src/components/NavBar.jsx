@@ -77,7 +77,7 @@ export default function NavBar({ auth, setAuth, admin, setAdmin }) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem component={Link} to='' onClick={handleClose}>Perfil</MenuItem>
+                <MenuItem component={Link} to='/profile' onClick={handleClose}>Perfil</MenuItem>
                 {admin && <MenuItem component={Link} to='/users' onClick={handleClose}>Usuarios</MenuItem>}
                 <MenuItem component={Link} to='/' onClick={handleClose}>Cerrar sesión</MenuItem>
               </Menu>
