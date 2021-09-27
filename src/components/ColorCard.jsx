@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardActionArea,
@@ -8,6 +8,7 @@ import {
   Button,
   Typography
 } from '@material-ui/core';
+import ProgramDialog from './ProgramDialog';
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import colors from '../static/theme/Colors';
 
@@ -48,6 +49,10 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
     console.log(value);
     handleView(value);
   }
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(!open);
+  }
 
   return (
     <Card className={classes.root} elevation={5}>
@@ -74,9 +79,16 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
         <Button size='small' color='primary' onClick={(e) => (viewCard(id))}>
           Ver
         </Button>
-        <Button size='small' color='secondary'>
+        <Button size='small' color='secondary' onClick={handleOpen}>
           Editar
         </Button>
+        <ProgramDialog
+        nameFunction='Modificar programa'
+        contentFunction='Ingrese la información del programa.'
+        buttonFunctionName='Guardar'
+        handleOpen={handleOpen}
+        open={open}
+        />
       </CardActions>
     </Card>
   );

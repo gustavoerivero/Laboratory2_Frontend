@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -6,10 +6,12 @@ import {
   Fab,
   Grid,
   Tooltip,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import PensumCard from './PensumCard';
+import PensumDialog from './PensumDialog';
 
 import AddIcon from '@material-ui/icons/Add';
 
@@ -39,29 +41,30 @@ export default function ProgramProfile({ id }) {
   const pensum = [
     {
       id: '0',
-      name: 'Cálculo I',
-      desc: 'Materia filtro',
+      codigo: 'PROD250921',
+      name: 'Pensum Procucción 2021-2',
+      desc: 'Pensum del programa de Ing. Producción, Lapso 2021-2',
+      date: '2021-09-25',
+      cod_programa: '1',
       pdf: 'pensum'
     },
     {
       id: '1',
-      name: 'Cálculo II',
-      desc: 'Materia filtro',
+      codigo: 'INF250921',
+      name: 'Pensum Informática 2021-2',
+      desc: 'Pensum del programa de Ing. Informática, Lapso 2021-2',
+      date: '2021-09-25',
+      cod_programa: '0',
       pdf: 'pensum'
     },
-    {
-      id: '2',
-      name: 'Cálculo III',
-      desc: 'Materia filtro',
-      pdf: 'pensum'
-    },
-    {
-      id: '3',
-      name: 'Cálculo IV',
-      desc: 'Materia filtro',
-      pdf: 'pensum'
-    }
+    
   ]
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  }
 
   return (
     <Card className={classes.root}>
@@ -76,10 +79,10 @@ export default function ProgramProfile({ id }) {
           <Grid item xs={12}>
             <Typography variant='caption' component='p' align='justify' className={classes.list}>
               <li>
-                <b>Breve descripción del programa: </b>
+                <b>Nombre del Programa: </b>
               </li>
               <li>
-                <b>Cantidad de pensum: </b>
+                <b>Breve descripción del programa: </b>
               </li>
             </Typography>
           </Grid>
@@ -91,19 +94,29 @@ export default function ProgramProfile({ id }) {
           </Grid>
           <Grid item xs={2} align='right'>
             <Tooltip title='Agregar pensum' placement='right-start'>
-              <Fab size='small' color='secondary' aria-label='add'>
+              <Fab size='small' color='secondary' aria-label='add' component={Button} onClick={handleOpen}>
                 <AddIcon />
               </Fab>
             </Tooltip>
+            <PensumDialog
+            nameFunction='Agregar pensum'
+            contentFunction='Ingrese la información del pensum a agregar. 
+            El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
+            buttonFunctionName='Agregar'
+            handleOpen={handleOpen}
+            open={open}
+            />
           </Grid>
           {
-            pensum.length > 0 ?
+           pensum.length > 0 ?
               pensum.map((element) => (
                 <Grid item key={element.id}>
                   <PensumCard
                     id={element.id}
-                    title={element.name}
-                    content={element.desc}
+                    name={element.name}
+                    code={element.code}
+                    date={element.date}
+                    description={element.desc}
                   />
                 </Grid>
               )) :
