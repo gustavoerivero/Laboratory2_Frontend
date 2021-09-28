@@ -4,20 +4,16 @@ import {
   CssBaseline,
   Fab,
   Grid,
-  Paper,
   Tooltip,
   Typography,
-  Divider
 } from '@material-ui/core';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import Tabla from '../components/Tabla';
 import ListItemUser from '../components/ListItemUsers'
-import ProgramDialog from '../components/ProgramDialog';
+import UserDialog from '../components/UserDialog';
 
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -59,8 +55,6 @@ export default function Users() {
 
   const [open, setOpen] = useState(false);
 
-  const [programSelect, setProgramSelect] = useState(null);
-
   const handleOpen = () => {
     setOpen(!open);
   }
@@ -96,9 +90,9 @@ export default function Users() {
                 <AddIcon />
               </Fab>
             </Tooltip>
-            <ProgramDialog
-              nameFunction='Agregar programa'
-              contentFunction='Ingrese la información del programa a agregar. 
+            <UserDialog
+              nameFunction='Agregar Usuario'
+              contentFunction='Ingrese la información del Usuario a agregar. 
                     El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
               buttonFunctionName='Agregar'
               handleOpen={handleOpen}

@@ -6,7 +6,8 @@ import {
     Grid,
     Paper,
     Tooltip,
-    Typography
+    Typography,
+    Divider
 } from '@material-ui/core';
 
 import List from '@material-ui/core/List';
@@ -87,9 +88,14 @@ export default function ListItemUser({ item }) {
                                 handleOpen={handleOpen}
                                 open={open}
                                 itemData={element}
+                                user={element.username}
                                 mail={element.email}
+                                pass={element.password}
+                                names={element.name}
+                                lastnames={element.lastname}
                             />
                         </ListItemSecondaryAction>
+                        <Divider/>
                     </ListItem>
                 ))}
             </List>

@@ -11,21 +11,32 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import RegExp from '../static/RegExp';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  input: {
+    display: 'none',
+  },
+}));
+
 export default function PensumDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, pensumId }) {
 
+  const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [fecha, setFecha] = useState('');
+  const [pdf, setPdf] = useState('');
   const [codProgram, setCodProgram] = useState('');
-
-  
 
   return (
     <div>
@@ -68,32 +79,12 @@ export default function PensumDialog({ nameFunction, contentFunction, open, hand
 
               <Grid item xs={12}>
                 <TextField
-                  id='pensum-name'
-                  variant='filled'
-                  label='Nombre del pensum'
-                  required
-                  fullWidth
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  error={
-                    !RegExp.regLetters.test(name) &&
-                      (name.length !== 0 && name.length < 4) ? true : false
-                  }
-                  helperText={
-                    !RegExp.regLetters.test(name) &&
-                      (name.length !== 0 && name.length < 4) ? 'Debe ingresar un nombre válido' : ''
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
                   id='pensum-description'
                   variant='filled'
                   label='Descripción del pensum'
                   required
                   fullWidth
-                  value={code}
+                  value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   error={
                     !RegExp.regLetters.test(description) &&
@@ -104,6 +95,32 @@ export default function PensumDialog({ nameFunction, contentFunction, open, hand
                       (name.length !== 0 && name.length < 4) ? 'Debe ingresar una descripción válida' : ''
                   }
                 />
+              </Grid>
+
+              <Grid item xs={9}>
+                <TextField
+                  id='pensum-filename'
+                  variant='outlined'
+                  disabled
+                  fullWidth
+                  value={pdf}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                />
+                <label htmlFor="contained-button-file">
+                  <Button variant="contained" color="primary" component="span" size="large">
+                    Upload
+                  </Button>
+                </label>
               </Grid>
 
             </Grid>

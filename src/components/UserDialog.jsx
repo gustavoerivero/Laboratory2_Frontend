@@ -20,7 +20,7 @@ import ComboBox from '../components/ComboBox';
 
 import RegExp from '../static/RegExp';
 
-export default function UserDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, buttonFunction, itemData, mail }) {
+export default function UserDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, buttonFunction, itemData, user, mail, pass, names, lastnames, }) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -88,7 +88,7 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-username'
                   variant='filled'
                   label='Username'
-                  defaultValue={itemData.username}
+                  defaultValue={user}
                   required
                   fullWidth
                   onChange={(e) => setUsername(e.target.value)}
@@ -126,7 +126,7 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-password'
                   variant='filled'
                   label='Password'
-                  defaultValue={itemData.password}
+                  defaultValue={pass}
                   required
                   fullWidth
                   onChange={(e) => setPassword(e.target.value)}
@@ -147,7 +147,7 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-name'
                   variant='filled'
                   label='Nombre'
-                  defaultValue={itemData.name}
+                  defaultValue={names}
                   required
                   fullWidth
                   onChange={(e) => setName(e.target.value)}
@@ -166,7 +166,7 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-lastname'
                   variant='filled'
                   label='Apellido'
-                  defaultValue={itemData.lastname}
+                  defaultValue={lastnames}
                   required
                   fullWidth
                   onChange={(e) => setLastname(e.target.value)}
