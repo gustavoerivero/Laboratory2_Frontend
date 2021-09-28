@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardActionArea,
@@ -8,8 +8,9 @@ import {
   Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import PensumDialog from './PensumDialog';
 
-export default function PensumCard({ id, title, content }) {
+export default function PensumCard({ id, name, code, date, description }) {
 
   const useStyles = makeStyles({
     root: {
@@ -26,25 +27,45 @@ export default function PensumCard({ id, title, content }) {
 
   const classes = useStyles();
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(!open);
+  }
+
   return (
     <Card className={classes.root} elevation={5}>
       <CardActionArea className={classes.secondRoot}>
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2'>
-            {title}
+            {name}
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {content}
+            {code}
           </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {date}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {description}
+          </Typography>
+          
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button size='small' color='primary'>
           Ver
         </Button>
-        <Button size='small' color='secondary'>
+        <Button size='small' color='secondary' onClick={handleOpen}>
           Editar
         </Button>
+         <PensumDialog
+            nameFunction='Modificar pensum'
+            contentFunction='Ingrese la información del pensum.'
+            buttonFunctionName='Guardar'
+            handleOpen={handleOpen}
+            open={open}
+            pensumId={id}
+            />
       </CardActions>
     </Card>
   );
