@@ -6,12 +6,14 @@ import {
   Grid,
   Paper,
   Tooltip,
-  Typography
+  Typography,
+  Divider
 } from '@material-ui/core';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Tabla from '../components/Tabla';
 import ListItemUser from '../components/ListItemUsers'
+import ProgramDialog from '../components/ProgramDialog';
 
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
@@ -67,42 +69,48 @@ export default function Users() {
     <div>
       <CssBaseline />
       <NavBar auth={auth} setAuth={setAuth} admin={admin} setAdmin={setAdmin} />
-      <Grid container className={classes.root}>
-        <Grid item xs={12} sm={12} md={12}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={1} justifyContent='center'>
+      <Grid container className={classes.root} justifyContent='center'>
 
-              <Grid item xs={12}>
-                <Typography variant='h4' component='h2' className={classes.title} align='left'>
-                  Lista de Usuarios
-                </Typography>
-              </Grid>
-
-              <Grid item xs={8}>
-                <Typography variant='caption' component='p' className={classes.title} align='justify'>
-                  A continuación, se listarán todos los Usuarios.
-                  Por favor, seleccione el que desee revisar.
-                </Typography>
-              </Grid>
-
-              <Grid item xs={4} align='right'>
-                <Grid container spacing={1} alignItems="flex-end">
-                  <Grid item xs={1} align='right'>
-                    <SearchIcon />
-                  </Grid>
-                  <Grid item xs={3} align='right'>
-                    <TextField id="input" label="Filtrar..." />
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item xs={11}>
-                <ListItemUser item={data} />
-              </Grid>
-
-            </Grid>
-          </Paper>
+        <Grid item xs={11} md={11}>
+          <Typography style={{ fontWeight: 600 }} variant='h4' component='h2' className={classes.title} align='left'>
+            Lista de Usuarios
+          </Typography>
         </Grid>
+
+        <Grid container spacing={1} justifyContent='center'>
+
+          <Grid item xs={11} md={7} align='center'>
+            <Typography variant='caption' component='p' className={classes.title} align='justify'>
+              A continuación, se listarán todos los Usuarios.
+              Por favor, seleccione el que desee revisar.
+            </Typography>
+          </Grid>
+
+          <Grid item xs={8} md={3} align='left'>
+            <TextField id="user-search" label="Buscar" type="search" fullWidth/>
+          </Grid>
+
+          <Grid item xs={1} md={1} align='right'>
+            <Tooltip title='Agregar Usuario' placement='right-start'>
+              <Fab size='small' color='secondary' aria-label='add' component={Button} onClick={handleOpen}>
+                <AddIcon />
+              </Fab>
+            </Tooltip>
+            <ProgramDialog
+              nameFunction='Agregar programa'
+              contentFunction='Ingrese la información del programa a agregar. 
+                    El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
+              buttonFunctionName='Agregar'
+              handleOpen={handleOpen}
+              open={open}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} md={11} align='center'>
+          <ListItemUser item={data} />
+        </Grid>
+
       </Grid>
       <Footer />
     </div>

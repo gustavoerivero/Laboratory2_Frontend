@@ -1,53 +1,21 @@
 import React, { useState } from 'react';
 import {
-    Box,
-    Button,
-    CssBaseline,
-    Fab,
     Grid,
-    Paper,
-    Tooltip,
     Typography
 } from '@material-ui/core';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
-import ProfileCard from '../components/ProfilePersonalCard';
-import AccountCard from '../components/ProfileAccountCard';
-import ChangePasswordCard from '../components/ProfileChangePasswordCard';
 import profile from '../assets/img/profile.jpg';
 
 import EmailIcon from '@material-ui/icons/Email';
 import FingerprintIcon from '@material-ui/icons/Fingerprint';
 
-import TextField from '@material-ui/core/TextField';
-import AddIcon from '@material-ui/icons/Add';
-import SearchIcon from '@material-ui/icons/Search';
-
 import { makeStyles } from '@material-ui/core/styles';
 
 import '../assets/css/index.css';
 import '@fontsource/roboto';
-import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        margin: '.75em',
-        marginTop: 75,
-    },
-    paper1: {
-        margin: 10,
-        padding: 15,
-    },
-    paper: {
-        margin: 10,
-        padding: 15,
-        minHeight: '80vh',
-    },
     title: {
         margin: 5,
-    },
-    aggMessage: {
-        margin: 25,
     },
     img: {
         [theme.breakpoints.up('sm')]: {
@@ -62,17 +30,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfileTop() {
 
     const classes = useStyles();
-
-    const [auth, setAuth] = useState(true);
-    const [admin, setAdmin] = useState(true);
-
-    const [open, setOpen] = useState(false);
-
-    const [programSelect, setProgramSelect] = useState(null);
-
-    const handleOpen = () => {
-        setOpen(!open);
-    }
 
     return (
         <Grid container spacing={1} justifyContent='center'>

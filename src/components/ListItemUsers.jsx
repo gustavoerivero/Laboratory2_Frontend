@@ -57,40 +57,42 @@ export default function ListItemUser({ item }) {
     }
 
     return (
-        <List dense={dense}>
-            {item.map((element) => (
-                <ListItem key={element.id}>
+        <Paper>
+            <List dense={dense}>
+                {item.map((element) => (
+                    <ListItem key={element.id}>
 
-                    <IconButton edge="start" aria-label="Edit">
-                        <AccountCircleIcon fontSize='small' />
-                    </IconButton>
+                        {/*<IconButton edge="start" aria-label="Edit">
+                            <AccountCircleIcon fontSize='small' />
+                            </IconButton>*/}
 
-                    <ListItemText
-                        primary={element.name + " " + element.lastname + " (" + element.username + ")"}
-                        secondary={
-                            " Correo: " + element.email
-                            + " | Rol: " + element.rol}
-                    />
-                    <ListItemSecondaryAction >
-                        <IconButton edge="start" aria-label="Edit" onClick={handleOpen}>
-                            <CreateIcon />
-                        </IconButton>
-                        <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
-                        </IconButton>
-                        <UserDialog
-                            nameFunction='Editar Usuario'
-                            contentFunction='Ingrese la información del Usuario que desea modificar. 
-                      El botón de Guardar no se habilitará hasta que ingrese la información requerida.'
-                            buttonFunctionName='Guardar'
-                            handleOpen={handleOpen}
-                            open={open}
-                            itemData={element}
-                            mail={element.email}
+                        <ListItemText
+                            primary={element.name + " " + element.lastname + " (" + element.username + ")"}
+                            secondary={
+                                " Correo: " + element.email
+                                + " | " + element.rol}
                         />
-                    </ListItemSecondaryAction>
-                </ListItem>
-            ))}
-        </List>
+                        <ListItemSecondaryAction >
+                            <IconButton edge="start" aria-label="Edit" onClick={handleOpen} >
+                                <CreateIcon />
+                            </IconButton>
+                            <IconButton edge="end" aria-label="delete">
+                                <DeleteIcon />
+                            </IconButton>
+                            <UserDialog
+                                nameFunction='Editar Usuario'
+                                contentFunction='Ingrese la información del Usuario que desea modificar. 
+                      El botón de Guardar no se habilitará hasta que ingrese la información requerida.'
+                                buttonFunctionName='Guardar'
+                                handleOpen={handleOpen}
+                                open={open}
+                                itemData={element}
+                                mail={element.email}
+                            />
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
+        </Paper>
     )
 }
