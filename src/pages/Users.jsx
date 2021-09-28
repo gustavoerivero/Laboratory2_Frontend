@@ -11,6 +11,7 @@ import {
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Tabla from '../components/Tabla';
+import ListItemUser from '../components/ListItemUsers'
 
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
@@ -40,33 +41,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Users() {
-     
-      const rows = [
-        {
-            name: 'Luis',
-            lastname: 'Valladares',
-            username: 'luisvalla',
-            email: 'luisprueba@gmail.com',
-            rol: 'ADMIN',
-            status: 'A'
-          },
-          {
-            name: 'Gustavo',
-            lastname: 'Rivero',
-            username: 'gusrive',
-            email: 'gustprueba@gmail.com',
-            rol: 'ADMIN',
-            status: 'I'
-          },
-          {
-            name: 'Maria',
-            lastname: 'Paredes',
-            username: 'mapar',
-            email: 'mariaprueba@gmail.com',
-            rol: 'ADMIN',
-            status: 'A'
-          },
-      ];
+
+  const data = [
+    { id: '0', name: 'Luis', lastname: 'Valladares', username: 'luisvalla', email: 'luisprueba@gmail.com', rol: 'ADMIN', status: 'A' },
+    { id: '1', name: 'Gustavo', lastname: 'Rivero', username: 'gusrive', email: 'gustprueba@gmail.com', rol: 'ADMIN', status: 'I' },
+    { id: '2', name: 'Maria', lastname: 'Paredes', username: 'mapar', email: 'mariaprueba@gmail.com', rol: 'ADMIN', status: 'A' },
+    { id: '3', name: 'Jose', lastname: 'Medina', username: 'medina69', email: 'joseprueba@gmail.com', rol: 'USER', status: 'A' },
+    { id: '4', name: 'Luis', lastname: 'Campos', username: 'camposluis', email: 'luiscprueba@gmail.com', rol: 'USER', status: 'A' },
+  ];
 
   const classes = useStyles();
 
@@ -105,18 +87,17 @@ export default function Users() {
 
               <Grid item xs={4} align='right'>
                 <Grid container spacing={1} alignItems="flex-end">
-                    <Grid item xs={1} align='right'>
-                        <SearchIcon/>
-                    </Grid>
-                    <Grid item xs={3} align='right'>
-                        <TextField id="input" label="Filtrar..." />
-                    </Grid>
+                  <Grid item xs={1} align='right'>
+                    <SearchIcon />
+                  </Grid>
+                  <Grid item xs={3} align='right'>
+                    <TextField id="input" label="Filtrar..." />
+                  </Grid>
                 </Grid>
               </Grid>
 
               <Grid item xs={11}>
-                <Tabla
-                rows={rows}/>
+                <ListItemUser item={data} />
               </Grid>
 
             </Grid>

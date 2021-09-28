@@ -9,7 +9,7 @@ export default function ComboBox({cbdata}) {
       id="combo-box"
       options={cbdata}
       getOptionLabel={(option) => option.rol}
-      style={{ width: 300 }}
+      fullWidth={true}
       renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
     />
   );

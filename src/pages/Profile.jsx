@@ -12,6 +12,7 @@ import {
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import ProfileCard from '../components/ProfilePersonalCard';
+import ProfileTop from '../components/ProfileTop';
 import AccountCard from '../components/ProfileAccountCard';
 import ChangePasswordCard from '../components/ProfileChangePasswordCard';
 import profile from '../assets/img/profile.jpg';
@@ -81,14 +82,14 @@ export default function Users() {
             <Grid container className={classes.root}>
                 <Grid item xs={12} sm={12} md={12}>
                     <Paper className={classes.paper} elevation={0}>
-                        <Grid container spacing={1} justifyContent='center'>
-                            <Grid item xs={4}>
+                        {/*<Grid container spacing={1} justifyContent='center'>
+                            <Grid item xs={12} md={5}>
                                 <Typography align='center'>
                                     <img src={profile} alt='' className={classes.img} />
                                 </Typography>
                             </Grid>
 
-                            <Grid item xs={7}>
+                            <Grid item xs={12} md={7}>
                                 <Grid item xs={12}>
                                     <Typography variant='h4' component='h2' className={classes.title} align='left'>
                                         Hola
@@ -122,53 +123,20 @@ export default function Users() {
                                     </Grid>
                                 </Grid>
                             </Grid>
+                        </Grid>*/}
 
-                            <Grid container spacing={1} justifyContent='center'>
-                                <Grid item xs={4}>
-                                    <ProfileCard/>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <AccountCard/>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <ChangePasswordCard/>
-                                </Grid>
+                        <ProfileTop/>
+
+                        <Grid container spacing={1} justifyContent='center'>
+                            <Grid item xs={12} md={4}>
+                                <ProfileCard />
                             </Grid>
-
-                            {/*<Grid item xs={11}>
-                                <Typography style={{ fontWeight: 600 }} variant='h4' component='h2' className={classes.title} align='left'>
-                                    Datos personales
-                                </Typography>
+                            <Grid item xs={12} md={4}>
+                                <AccountCard />
                             </Grid>
-                            <Grid item xs={11}>______________________________________________________________________________________________________________________________________________________________________</Grid>
-                            <Grid item xs={8}>
-                                <Grid container spacing={1} alignItems="flex-end">
-                                    <Grid item>
-                                        <Typography style={{ fontWeight: 600 }} variant='h6' component='h2' className={classes.title} align='left'>
-                                            Nombre:
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant='h6' component='h2' className={classes.title} align='left'>
-                                            Gustavo
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                                <Grid container spacing={1} alignItems="flex-end">
-                                    <Grid item>
-                                        <Typography style={{ fontWeight: 600 }} variant='h6' component='h2' className={classes.title} align='left'>
-                                            Apellido:
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant='h6' component='h2' className={classes.title} align='left'>
-                                            Rivero
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-
-                            </Grid>*/}
-
+                            <Grid item xs={12} md={4}>
+                                <ChangePasswordCard />
+                            </Grid>
                         </Grid>
                     </Paper>
                 </Grid>

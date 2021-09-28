@@ -99,13 +99,13 @@ export default function Tabla({rows}) {
                         Editar
                     </Button>
                     <UserDialog
-                      nameFunction='Editar Usuario'
+                      /*nameFunction='Editar Usuario'
                       contentFunction='Ingrese la información del Usuario que desea modificar. 
                       El botón de Guardar no se habilitará hasta que ingrese la información requerida.'
                       buttonFunctionName='Guardar'
                       handleOpen={handleOpen}
                       open={open}
-                      cbdata={roles}
+                      cbdata={row}*/
                     />
 
                 </TableRow>

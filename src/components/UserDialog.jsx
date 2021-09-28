@@ -20,7 +20,7 @@ import ComboBox from '../components/ComboBox';
 
 import RegExp from '../static/RegExp';
 
-export default function UserDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, buttonFunction, cbdata }) {
+export default function UserDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, buttonFunction, itemData, mail }) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -31,6 +31,14 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   //const [rol, setRol] = useState('');
+
+  const roles = [
+    { rol: 'ADMIN' },
+    { rol: 'INFOR-USER' },
+    { rol: 'PRODU-USER' },
+    { rol: 'TELEM-USER' },
+    { rol: 'FISIC-USER' },
+    { rol: 'MATEM-USER' }];
 
   const GreenCheckbox = withStyles({
     root: {
@@ -80,10 +88,9 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-username'
                   variant='filled'
                   label='Username'
-                  defaultValue={''}
+                  defaultValue={itemData.username}
                   required
                   fullWidth
-                  value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   error={
                     username.length !== 0 && username.length < 4 ? true : false
@@ -99,9 +106,9 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-email'
                   variant='filled'
                   label='Correo'
+                  defaultValue={mail}
                   required
                   fullWidth
-                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   error={
                     !RegExp.regLetters.test(email) &&
@@ -119,9 +126,9 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   id='user-password'
                   variant='filled'
                   label='Password'
+                  defaultValue={itemData.password}
                   required
                   fullWidth
-                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   error={
                     !RegExp.regLetters.test(password) &&
@@ -134,15 +141,15 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                 />
               </Grid>
 
-              
+
               <Grid item xs={12}>
                 <TextField
                   id='user-name'
                   variant='filled'
                   label='Nombre'
+                  defaultValue={itemData.name}
                   required
                   fullWidth
-                  value={name}
                   onChange={(e) => setName(e.target.value)}
                   error={
                     name.length !== 0 && name.length < 4 ? true : false
@@ -153,15 +160,15 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                 />
               </Grid>
 
-              
+
               <Grid item xs={12}>
                 <TextField
                   id='user-lastname'
                   variant='filled'
                   label='Apellido'
+                  defaultValue={itemData.lastname}
                   required
                   fullWidth
-                  value={lastname}
                   onChange={(e) => setLastname(e.target.value)}
                   error={
                     lastname.length !== 0 && lastname.length < 4 ? true : false
@@ -174,13 +181,7 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
 
               <Grid item xs={12}>
                 <ComboBox
-                cbdata={cbdata} />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                 control={<GreenCheckbox checked={state.statusCheck} onChange={handleChange} name="statusCheck" />}
-                  label="Estatus"
-                />
+                  cbdata={roles} />
               </Grid>
 
             </Grid>
