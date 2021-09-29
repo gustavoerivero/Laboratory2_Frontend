@@ -1,70 +1,134 @@
-# Getting Started with Create React App
+# Proyecto Laboratorio II
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+_Este proyecto representa la actividad evaluada FullStack para la asignatura Laboratorio II del 
+Programa de Ingeniería en Informática del Decanato de Ciencias y tecnología de la Universidad 
+Centroccidental "Lisandro Alvarado", Venezuela._
 
-## Available Scripts
+## Comenzando 🚀
 
-In the project directory, you can run:
+_La aplicación desarrollada con React.js para el frontend y Spring Boot para el backend también hace uso de otras librerías las cuales son necesarias para el funcionamiento correcto de la práctica en cuestión._
 
-### `yarn start`
+_Si ya posee la práctica, puede visualizar **Despliegue** para conocer como desplegar el proyecto._
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+_De igual manera, la práctica se encuentra desplegada en GitHub Pages, de manera que se puede visualizar el resultado final._
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
+### Pre-requisitos 📋
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Última versión estable de [Node.js](https://nodejs.org/en/)
 
-### `yarn build`
+_O, en su defecto_
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Última versión estable de [Yarn](https://yarnpkg.com/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Java 8 o superior.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [Postman](https://www.postman.com/) para las solicitudes HTTP.
 
-### `yarn eject`
+* Para el proyecto se usó [IntelliJ](https://www.jetbrains.com/es-es/idea/) como IDE en la construcción
+del backend, pero también se puede utilizar [Eclipse](https://www.eclipse.org/downloads/packages/release/2021-09/r/eclipse-ide-enterprise-java-and-web-developers) o [NetBeans](https://netbeans.apache.org/).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* Para el proyecto se usó [Visual Studio Code](https://code.visualstudio.com/) como editor de texto para la 
+elaboración del frontend, pero se puede utilizar otro editor de texto.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* [MySQL](https://www.mysql.com/products/workbench/) como SGBD.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Instalación 🔧
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+_Para comenzar, se procede con la descarga del repositorio. Para ello se debe abrir la consola,
+ubicarse en la carpera en la que desea guardar el proyecto y ejecutar el siguiente comando:_
 
-## Learn More
+```
+git clone https://github.com/gustavoerivero/Laboratory2_Frontend.git
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+_Luego, situarse en la carpeta clonada del repositorio "Laboratory2_Frontend"._
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+_Para el caso de un Sistema Operativo Windows, con el comando:__
 
-### Code Splitting
+```
+cd Laboratory2_Frontend
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+_Luego, se procede con la instalación de las librerías y dependencias necesarias para su ejecución.
+Cabe destacar que hay diferentes maneras de realizar esto_
 
-### Analyzing the Bundle Size
+_Con npm:_
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+npm install
+```
 
-### Making a Progressive Web App
+_De no funcionar, intentar con:_
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+npm i -f
+```
 
-### Advanced Configuration
+_De utilizar yarn:_
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+yarn upgrade
+```
 
-### Deployment
+_Una vez se logre la instalación de las dependencias, la práctica está lista para desplegarse._
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* _Para preparar el entorno del backend:_
 
-### `yarn build` fails to minify
+_Para correr el servidor del backend, se debe abrir la carpeta "backend"
+con un IDE para aplicaciones Java o un editor de texto con extensiones para archivos Java._
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+_Luego, se procede a correr la aplicación, o ejecutar el comando "Run" sobre 
+el archivo "PensumsystemApplication.java"._
+
+## Despliegue 📦
+
+_Para realizar un desplegue local (localhost:3000), se procede a ejecutar uno de los siguientes comandos:_
+
+_Con npm:_
+
+```
+npm start
+```
+
+_Con yarn:_
+```
+yarn start
+```
+
+_Luego de esto, se abrirá una nueva pestaña con la aplicación en ejecución._
+
+* _Para realizar un desplegue local (localhost:8080) del backend, se procede a realizar los siguientes pasos:_
+
+- _Ejecutar el servidor con el comando "Run" en el archivo "PensumsystemApplication.java"._
+
+- _Iniciar la base de datos en MySQL llamada "dblab2". MySQL tendría los datos predeterminados (contraseña null en usuario root)._
+
+- _(Opcional): De ser necesario, usar Xampp para preparar el entorno de MySQL y así ejecutarlo._
+
+_Luego de esto, se abrirá una nueva pestaña con la aplicación en ejecución._
+
+## Construido con 🛠️
+
+_Es bueno recalcar que el código fue desarrollado con:_
+
+* [React.js](https://es.reactjs.org/) - El framework web usado.
+* [React Router](https://reactrouter.com/) - Librería de React.js para la navegación entre páginas.
+* [Material UI](https://material-ui.com/) - Librería de React.js para diseño de componentes visuales.
+* [React Top Bar Progress Indicator](https://www.npmjs.com/package/react-topbar-progress-indicator) - Librería de React.js para añadir una barra superior que indica la carga de la página.
+* [Axios](https://www.npmjs.com/package/axios) - Librería basada en promesas para realizar solicitudes HTTP entre el navegador y Node.js
+* [Maven](https://maven.apache.org/) - Herramienta de Java para el desarrollo de aplicaciones con manipulación de variables o documentos con formato JSON.
+* [Spring Boot](https://spring.io/projects/spring-boot) - Framework de Java para el desarrollo de aplicaciones web.
+
+## Autores ✒️
+
+_Los autores de esta práctica son:_
+
+* **Gustavo Rivero** - [gustavoerivero](https://github.com/gustavoerivero)
+* **María Paredes**  - [Mariaparedes](https://github.com/Mariaparedes)
+* **Luis Valladares**  - [luisv98](https://github.com/luisv98)
+
+
+
+---
+⌨️ con ❤️ por [Equipo Dinamita] 
