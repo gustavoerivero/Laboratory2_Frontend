@@ -47,7 +47,7 @@ const Login = () => {
 
   return (
     <form autoComplete='off'>
-      <Paper variant='outlined' className={classes.root} elevation={5}>
+      <Paper /*variant='outlined'*/ className={classes.root} elevation={0}>
         <Grid container justifyContent='center' spacing={2}>
           <Grid item align='center'>
             <img src={UCLA} alt='' className={classes.img} />

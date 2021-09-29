@@ -6,11 +6,16 @@ import {
   CardMedia,
   CardContent,
   Button,
-  Typography
+  Typography,
+
 } from '@material-ui/core';
 import ProgramDialog from './ProgramDialog';
+import DeleteDialog from '../components/DeleteDialog'
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import colors from '../static/theme/Colors';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+
 
 export default function ColorCard({ id, title, content, haveColor, color, handleView }) {
 
@@ -54,6 +59,11 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
     setOpen(!open);
   }
 
+  const [openDel, setOpenDel] = useState(false);
+  const handleOpenDel = () => {
+    setOpenDel(!openDel);
+}
+
   return (
     <Card className={classes.root} elevation={5}>
       <ThemeProvider theme={theme}>
@@ -76,18 +86,28 @@ export default function ColorCard({ id, title, content, haveColor, color, handle
         </CardActionArea>
       </ThemeProvider>
       <CardActions>
-        <Button size='small' color='primary' onClick={(e) => (viewCard(id))}>
+        <Button edge="start" size='small' color='primary' onClick={(e) => (viewCard(id))}>
           Ver
         </Button>
-        <Button size='small' color='secondary' onClick={handleOpen}>
+        <Button edge="start" size='small' color='secondary' onClick={handleOpen}>
           Editar
         </Button>
+        <IconButton edge="end" aria-label="delete" onClick={handleOpenDel}>
+          <DeleteIcon />
+        </IconButton>
         <ProgramDialog
-        nameFunction='Modificar programa'
-        contentFunction='Ingrese la información del programa.'
-        buttonFunctionName='Guardar'
-        handleOpen={handleOpen}
-        open={open}
+          nameFunction='Modificar programa'
+          contentFunction='Ingrese la información del programa.'
+          buttonFunctionName='Guardar'
+          handleOpen={handleOpen}
+          open={open}
+        />
+        <DeleteDialog
+          nameFunction='Eliminar Programa'
+          contentFunction='¿Esta seguro que desea eliminar este Programa?'
+          buttonFunctionName='Eliminar'
+          handleOpen={handleOpenDel}
+          open={openDel}
         />
       </CardActions>
     </Card>

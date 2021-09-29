@@ -22,6 +22,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import UserDialog from '../components/UserDialog';
+import DeleteDialog from '../components/DeleteDialog'
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -53,8 +54,12 @@ export default function ListItemUser({ item }) {
     const [dense, setDense] = React.useState(false);
     const [secondary, setSecondary] = React.useState(false);
     const [open, setOpen] = useState(false);
+    const [openDel, setOpenDel] = useState(false);
     const handleOpen = () => {
         setOpen(!open);
+    }
+    const handleOpenDel = () => {
+        setOpenDel(!openDel);
     }
 
     return (
@@ -77,7 +82,7 @@ export default function ListItemUser({ item }) {
                             <IconButton edge="start" aria-label="Edit" onClick={handleOpen} >
                                 <CreateIcon />
                             </IconButton>
-                            <IconButton edge="end" aria-label="delete">
+                            <IconButton edge="end" aria-label="delete" onClick={handleOpenDel}>
                                 <DeleteIcon />
                             </IconButton>
                             <UserDialog
@@ -94,8 +99,15 @@ export default function ListItemUser({ item }) {
                                 names={element.name}
                                 lastnames={element.lastname}
                             />
+                            <DeleteDialog
+                                nameFunction='Eliminar Usuario'
+                                contentFunction='¿Esta seguro que desea eliminar este usuario?'
+                                buttonFunctionName='Eliminar'
+                                handleOpen={handleOpenDel}
+                                open={openDel}
+                            />
                         </ListItemSecondaryAction>
-                        <Divider/>
+                        <Divider />
                     </ListItem>
                 ))}
             </List>

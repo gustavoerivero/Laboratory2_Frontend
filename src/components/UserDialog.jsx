@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
 import {
   Button,
   Dialog,
@@ -13,8 +11,6 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
 import ComboBox from '../components/ComboBox';
 
@@ -39,16 +35,6 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
     { rol: 'TELEM-USER' },
     { rol: 'FISIC-USER' },
     { rol: 'MATEM-USER' }];
-
-  const GreenCheckbox = withStyles({
-    root: {
-      color: green[400],
-      '&$checked': {
-        color: green[600],
-      },
-    },
-    checked: {},
-  })((props) => <Checkbox color="default" {...props} />);
 
   const [state, setState] = React.useState({
     checkedA: true,

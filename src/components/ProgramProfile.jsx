@@ -42,7 +42,7 @@ export default function ProgramProfile({ id }) {
     {
       id: '0',
       codigo: 'PROD250921',
-      name: 'Pensum Procucción 2021-2',
+      name: 'Pensum Producción 2021-2',
       desc: 'Pensum del programa de Ing. Producción, Lapso 2021-2',
       date: '2021-09-25',
       cod_programa: '1',
@@ -55,6 +55,15 @@ export default function ProgramProfile({ id }) {
       desc: 'Pensum del programa de Ing. Informática, Lapso 2021-2',
       date: '2021-09-25',
       cod_programa: '0',
+      pdf: 'pensum'
+    },
+    {
+      id: '2',
+      codigo: 'TEL290921',
+      name: 'Pensum Telematica 2021-2',
+      desc: 'Pensum del programa de Ing. Telematica, Lapso 2021-2',
+      date: '2021-09-29',
+      cod_programa: '2',
       pdf: 'pensum'
     },
     
@@ -110,7 +119,7 @@ export default function ProgramProfile({ id }) {
           {
            pensum.length > 0 ?
               pensum.map((element) => (
-                <Grid item key={element.id}>
+                <Grid item xs={12} md={6} key={element.id}>
                   <PensumCard
                     id={element.id}
                     name={element.name}

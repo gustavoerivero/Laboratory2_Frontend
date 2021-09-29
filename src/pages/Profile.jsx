@@ -53,14 +53,6 @@ export default function Users() {
     const [auth, setAuth] = useState(true);
     const [admin, setAdmin] = useState(true);
 
-    const [open, setOpen] = useState(false);
-
-    const [programSelect, setProgramSelect] = useState(null);
-
-    const handleOpen = () => {
-        setOpen(!open);
-    }
-
     return (
         <div>
             <CssBaseline />
