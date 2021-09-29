@@ -21,8 +21,8 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
-import UserDialog from '../components/UserDialog';
-import DeleteDialog from '../components/DeleteDialog'
+import UserDialog from './UserDialog';
+import DeleteDialog from './DeleteDialog'
 
 import { makeStyles } from '@material-ui/core/styles';
 

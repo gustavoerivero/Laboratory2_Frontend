@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 
-import ComboBox from '../components/ComboBox';
+import ComboBox from './ComboBox';
 
 import RegExp from '../static/RegExp';
 

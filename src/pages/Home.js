@@ -85,7 +85,6 @@ export default function Home() {
 
   const classes = useStyles();
 
-  const [auth, setAuth] = useState(true);
   const [open, setOpen] = useState(false);
   const [programSelect, setProgramSelect] = useState(null);
 
@@ -96,7 +95,7 @@ export default function Home() {
   return (
     <div>
       <CssBaseline />
-      <NavBar auth={auth} setAuth={setAuth} admin={rol === 0 ? true : false} />
+      <NavBar auth={true} admin={rol === '0' ? true : false} />
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={12} md={6}>
           <Paper className={classes.paper}>
