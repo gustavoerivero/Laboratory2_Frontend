@@ -16,7 +16,7 @@ import { useTheme } from '@material-ui/core/styles';
 
 import RegExp from '../static/RegExp';
 
-export default function ProgramDialog({ id, open, handleOpen }) {
+export default function ProgramDialog({ id, open, handleOpen, type, title }) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -40,7 +40,25 @@ export default function ProgramDialog({ id, open, handleOpen }) {
   }
 
   useEffect(() => {
-    if (update) {
+    if (update && type === 'add') {
+      axios.post(`http://192.168.1.100:8080/programa/add`, {
+        codigo: code,
+        nombre: name
+      })
+        .then(res => {
+          console.log(res)
+          setResponse(true)
+          handleUpdate()
+          handleOpen()
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+          handleUpdate()
+          handleOpen()
+        })
+    } else if (update && type === 'update') {
       axios.put(`http://192.168.1.100:8080/programa/update/id/${Number(id)}`, {
         codigo: code,
         nombre: name,
@@ -72,7 +90,7 @@ export default function ProgramDialog({ id, open, handleOpen }) {
           aria-labelledby='add-program'
         >
           <DialogTitle id='responsive-title'>
-            Modificar programa
+            {title}
           </DialogTitle>
           <DialogContent>
             <Grid container spacing={2}>
@@ -144,7 +162,7 @@ export default function ProgramDialog({ id, open, handleOpen }) {
               response ?
                 <CustomizedSnackbar
                   type={response ? 'success' : !response ? 'error' : 'warning'}
-                  message={response ? 'El programa se ha actualizado con éxito' : !response ? 'No se ha podido actualizar el programa' : 'Cargando...'}
+                  message={response ? 'El programa se ha guardado con éxito' : !response ? 'No se ha podido guardar el programa' : 'Cargando...'}
                   open={response}
                   handleClose={handleClose}
                 />

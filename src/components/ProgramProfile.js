@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
   Card,
   CardContent,
@@ -8,12 +9,12 @@ import {
   Tooltip,
   Typography,
   Button
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import PensumCard from './PensumCard';
-import PensumDialog from './PensumDialog';
+} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import PensumCard from './PensumCard'
+import PensumDialog from './PensumDialog'
 
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add'
 
 const useStyles = makeStyles({
   root: {
@@ -32,11 +33,47 @@ const useStyles = makeStyles({
   subContent: {
     margin: '2em',
   },
-});
+})
 
 export default function ProgramProfile({ id }) {
 
-  const classes = useStyles();
+  const classes = useStyles()
+
+  const [program, setProgram] = useState({
+    id: id,
+    codigo: '',
+    nombre: '',
+    status: ''
+  })
+
+  const [pensums, setPensums] = useState([])
+
+  const [response, setResponse] = useState(null)
+
+  useEffect(() => {
+    if (id && response === null) {
+      axios.get(`http://192.168.1.100:8080/programa/get/${Number(id)}`)
+        .then(res => {
+          console.log(res.data)
+          setProgram(res.data)
+          setResponse(true)
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+        })
+    } else if (id && response === true && pensums.length === 0) {
+      axios.get(`http://192.1.100:8080/pensum/get/programa/${program.codigo}`)
+        .then(res => {
+          console.log(res.data)
+          setPensums(res.data)
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+        })
+    }
+  })
 
   const pensum = [
     {
@@ -57,13 +94,13 @@ export default function ProgramProfile({ id }) {
       cod_programa: '0',
       pdf: 'pensum'
     },
-    
+
   ]
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
-    setOpen(!open);
+    setOpen(!open)
   }
 
   return (
@@ -72,17 +109,14 @@ export default function ProgramProfile({ id }) {
         <Grid container justifyContent='center' spacing={2}>
           <Grid item xs={12}>
             <Typography gutterBottom variant='h5' component='h2' align='center' className={classes.title}>
-              Programa: {id}
+              Programa: {program.nombre}
             </Typography>
           </Grid>
           <Grid item xs={12}><Divider /></Grid>
           <Grid item xs={12}>
-            <Typography variant='caption' component='p' align='justify' className={classes.list}>
+            <Typography variant='body2' component='p' align='justify' className={classes.list}>
               <li>
-                <b>Nombre del Programa: </b>
-              </li>
-              <li>
-                <b>Breve descripción del programa: </b>
+                <b>Código del Programa: </b>{program.codigo}
               </li>
             </Typography>
           </Grid>
@@ -99,16 +133,16 @@ export default function ProgramProfile({ id }) {
               </Fab>
             </Tooltip>
             <PensumDialog
-            nameFunction='Agregar pensum'
-            contentFunction='Ingrese la información del pensum a agregar. 
-            El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
-            buttonFunctionName='Agregar'
-            handleOpen={handleOpen}
-            open={open}
+              nameFunction='Agregar pensum'
+              contentFunction='Ingrese la información del pensum a agregar. 
+              El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
+              buttonFunctionName='Agregar'
+              handleOpen={handleOpen}
+              open={open}
             />
           </Grid>
           {
-           pensum.length > 0 ?
+            pensum.length > 0 ?
               pensum.map((element) => (
                 <Grid item key={element.id}>
                   <PensumCard
@@ -129,5 +163,5 @@ export default function ProgramProfile({ id }) {
         </Grid>
       </CardContent>
     </Card>
-  );
+  )
 }

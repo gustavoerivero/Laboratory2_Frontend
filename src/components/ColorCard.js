@@ -148,6 +148,8 @@ export default function ColorCard({ rol, id, title, content, haveColor, color, h
           : ''
         }
         <ProgramDialog
+          title='Modificar Programa'
+          type='update'
           id={id}
           handleOpen={handleOpen}
           open={open}

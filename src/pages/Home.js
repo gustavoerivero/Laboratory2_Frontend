@@ -122,10 +122,9 @@ export default function Home() {
                         </Fab>
                       </Tooltip>
                       <ProgramDialog
-                        nameFunction='Agregar programa'
-                        contentFunction='Ingrese la información del programa a agregar. 
-                          El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
-                        buttonFunctionName='Agregar'
+                        id={null}
+                        type='add'
+                        title='Agregar programa'
                         handleOpen={handleOpen}
                         open={open}
                       />
