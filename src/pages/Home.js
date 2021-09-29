@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
+import { useParams } from 'react-router-dom';
 import {
   Button,
   CssBaseline,
@@ -41,41 +43,50 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
 
-  const data = [
-    {
-      id: '0',
-      title: 'ING-INF',
-      desc: 'Ingeniería en Informática',
-    },
-    {
-      id: '1',
-      title: 'ING-PRO',
-      desc: 'Ingeniería de Producción',
-    },
-    {
-      id: '2',
-      title: 'LIC-FIS',
-      desc: 'Licenciatura en Física',
-    },
-    {
-      id: '3',
-      title: 'LIC-MAT',
-      desc: 'Licenciatura en Matemática'
-    },
-    {
-      id: '4',
-      title: 'ING-TEL',
-      desc: 'Ingeniería en Telemática',
-    },
-  ];
+  const { username, rol } = useParams()
+
+  const [programs, setPrograms] = useState([])
+  const [program, setProgram] = useState({
+    id: 0,
+    codigo: '',
+    nombre: '',
+    status: ''
+  })
+  const [user, setUser] = useState({
+    id: 0,
+    programa: {
+      id: 0,
+      codigo: '',
+      nombre: '',
+      status: ''
+    }
+  })
+
+  useEffect(() => {
+    if (rol === '0' && programs.length === 0) {
+      axios.get(`http://192.168.1.100:8080/programa/get`)
+        .then(result => {
+          setPrograms(result.data)
+        })
+        .catch(error => console.log(error))
+    } else if (rol === '1' && program.id === 0) {
+      axios.get(`http://192.168.1.100:8080/usuario/get/username/${username}`)
+        .then(result => {
+          setUser(result.data)
+        })
+        .catch(error => console.log(error))
+      axios.get(`http://192.168.1.100:8080/programa/get/codigo/${user.programa.codigo}`)
+        .then(result => {
+          setProgram(result.data)
+        })
+        .catch(error => console.log(error))
+    }
+  })
 
   const classes = useStyles();
 
   const [auth, setAuth] = useState(true);
-  const [admin, setAdmin] = useState(true);
-
   const [open, setOpen] = useState(false);
-
   const [programSelect, setProgramSelect] = useState(null);
 
   const handleOpen = () => {
@@ -85,7 +96,7 @@ export default function Home() {
   return (
     <div>
       <CssBaseline />
-      <NavBar auth={auth} setAuth={setAuth} admin={admin} setAdmin={setAdmin} />
+      <NavBar auth={auth} setAuth={setAuth} admin={rol === 0 ? true : false} />
       <Grid container className={classes.root}>
         <Grid item xs={12} sm={12} md={6}>
           <Paper className={classes.paper}>
@@ -102,36 +113,60 @@ export default function Home() {
                 </Typography>
               </Grid>
               <Grid item xs={2} align='right'>
-                <Tooltip title='Agregar programa' placement='right-start'>
-                  <Fab size='small' color='secondary' aria-label='add' component={Button} onClick={handleOpen}>
-                    <AddIcon />
-                  </Fab>
-                </Tooltip>
-                <ProgramDialog
-                  nameFunction='Agregar programa'
-                  contentFunction='Ingrese la información del programa a agregar. 
-                    El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
-                  buttonFunctionName='Agregar'
-                  handleOpen={handleOpen}
-                  open={open}
-                />
+                {
+                  rol === '0' ?
+                    <>
+                      <Tooltip title='Agregar programa' placement='right-start'>
+                        <Fab size='small' color='secondary' aria-label='add' component={Button} onClick={handleOpen}>
+                          <AddIcon />
+                        </Fab>
+                      </Tooltip>
+                      <ProgramDialog
+                        nameFunction='Agregar programa'
+                        contentFunction='Ingrese la información del programa a agregar. 
+                          El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
+                        buttonFunctionName='Agregar'
+                        handleOpen={handleOpen}
+                        open={open}
+                      />
+                    </>
+                    : ''
+                }
               </Grid>
-              {data.length > 0 ? data.map((element) => (
-                <Grid item key={element.id}>
+              {rol === '0' && programs.length > 0 ? programs.map((element, i) => {
+                console.log(element)
+                return (
+                  <Grid item key={i}>
+                    <ColorCard
+                      id={element.id}
+                      title={element.codigo}
+                      content={element.nombre}
+                      haveColor={true}
+                      color={1}
+                      rol={rol}
+                      handleView={setProgramSelect}
+                    />
+                  </Grid>
+                )
+              }) : rol === '1' && program.id !== 0 ?
+                <Grid item>
                   <ColorCard
-                    id={element.id}
-                    title={element.title}
-                    content={element.desc}
+                    id={program.id}
+                    title={program.codigo}
+                    content={program.nombre}
                     haveColor={true}
-                    color={Math.floor(Math.random() * 5)}
+                    color={1}
                     handleView={setProgramSelect}
                   />
                 </Grid>
-              )) :
+                :
                 <Grid item>
                   <Typography variant='body2' component='p' className={classes.aggMessage}>
-                    No se han ingresado programas aún. Para agregar un programa,
-                    haga click en el botón de agregar.
+                    {
+                      rol === '0' ?
+                        "No se han ingresado programas aún. Para agregar un programa, haga click en el botón de agregar."
+                        : "No se han ingresado programas aún."
+                    }
                   </Typography>
                 </Grid>
               }

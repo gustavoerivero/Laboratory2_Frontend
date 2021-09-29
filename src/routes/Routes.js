@@ -13,7 +13,7 @@ export default function App() {
       <BrowserRouter>
         <CustomSwitch>
           <Route exact path='/' component={LoginPage} />
-          <Route exact path='/Home' component={Home} />
+          <Route exact path='/Home/:username/:rol' component={Home} />
           <Route exact path='/error-404' component={NotFound} />
           <Redirect from='*' to='/error-404' />
         </CustomSwitch>

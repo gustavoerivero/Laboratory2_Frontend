@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import {
   Button,
   Dialog,
@@ -10,17 +11,56 @@ import {
   useMediaQuery,
   TextField,
 } from '@material-ui/core';
+import CustomizedSnackbar from './Snackbar'
 import { useTheme } from '@material-ui/core/styles';
 
 import RegExp from '../static/RegExp';
 
-export default function ProgramDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, buttonFunction }) {
+export default function ProgramDialog({ id, open, handleOpen }) {
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
+
+  const [update, setUpdate] = useState(false)
+
+  const [response, setResponse] = useState(null)
+
+  const handleUpdate = () => {
+    setUpdate(!update)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    handleOpen()
+  }
+
+  useEffect(() => {
+    if (update) {
+      axios.put(`http://192.168.1.100:8080/programa/update/id/${Number(id)}`, {
+        codigo: code,
+        nombre: name,
+        status: 'A'
+      })
+        .then(res => {
+          console.log(res)
+          setResponse(true)
+          handleUpdate()
+          handleOpen()
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+          handleUpdate()
+          handleOpen()
+        })
+    }
+  })
 
   return (
     <div>
@@ -32,14 +72,14 @@ export default function ProgramDialog({ nameFunction, contentFunction, open, han
           aria-labelledby='add-program'
         >
           <DialogTitle id='responsive-title'>
-            {nameFunction}
+            Modificar programa
           </DialogTitle>
           <DialogContent>
             <Grid container spacing={2}>
 
               <Grid item xs={12}>
                 <DialogContentText>
-                  {contentFunction}
+                  Ingrese la información del programa
                 </DialogContentText>
               </Grid>
 
@@ -88,7 +128,7 @@ export default function ProgramDialog({ nameFunction, contentFunction, open, han
               Cancelar
             </Button>
             <Button
-              onClick={handleOpen}
+              onClick={handleUpdate}
               variant='contained'
               color='primary'
               autoFocus
@@ -98,8 +138,18 @@ export default function ProgramDialog({ nameFunction, contentFunction, open, han
                 (name !== '' || name.length < 4)
               }
             >
-              {buttonFunctionName}
+              Guardar
             </Button>
+            {
+              response ?
+                <CustomizedSnackbar
+                  type={response ? 'success' : !response ? 'error' : 'warning'}
+                  message={response ? 'El programa se ha actualizado con éxito' : !response ? 'No se ha podido actualizar el programa' : 'Cargando...'}
+                  open={response}
+                  handleClose={handleClose}
+                />
+                : ''
+            }
           </DialogActions>
         </Dialog>
       </form>

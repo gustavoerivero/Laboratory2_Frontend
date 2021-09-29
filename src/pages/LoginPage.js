@@ -31,12 +31,10 @@ export default function LoginPage() {
 
   const classes = useStyles();
 
-  const [auth, setAuth] = useState(false);
-
   return (
     <div>
       <CssBaseline />
-      <NavBar auth={auth} setAuth={setAuth} />
+      <NavBar />
       <Grid container justifyContent='center' alignItems='center' className={classes.root}>
         <Grid item xs={12} sm={12} md={8} lg={8} xl={6}>
           <Grid container justifyContent='center'>

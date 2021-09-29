@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar({ auth, setAuth, admin, setAdmin }) {
+export default function NavBar({ auth, setAuth, admin }) {
 
   const classes = useStyles();
 
