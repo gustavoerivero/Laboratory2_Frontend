@@ -65,15 +65,15 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
         status: 'A'
       })
         .then(res => {
-          console.log(res)
           setResponse(true)
+          console.log(res)
           handleUpdate()
           handleOpen()
           window.location.href = window.location.href
         })
         .catch(error => {
-          console.log(error)
           setResponse(false)
+          console.log(error)
           handleUpdate()
           handleOpen()
         })
@@ -129,11 +129,9 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   error={
-                    !RegExp.regLetters.test(name) &&
                       (name.length !== 0 && name.length < 4) ? true : false
                   }
                   helperText={
-                    !RegExp.regLetters.test(name) &&
                       (name.length !== 0 && name.length < 4) ? 'Debe ingresar un nombre válido' : ''
                   }
                 />
@@ -148,12 +146,12 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
             <Button
               onClick={handleUpdate}
               variant='contained'
-              color='primary'
+              color='primary' 
               autoFocus
               disabled={
-                (code !== '' || code.length < 4) &&
-                !RegExp.regLetters.test(name) &&
-                (name !== '' || name.length < 4)
+                !RegExp.regLetters.test(code) && 
+                !RegExp.regLetters.test(name) && 
+                code.length < 4 && name.length < 4
               }
             >
               Guardar

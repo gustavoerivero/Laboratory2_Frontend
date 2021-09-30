@@ -63,8 +63,8 @@ export default function Footer() {
   return (
     <footer>
       <Box
-        px={{ xs: 1, sm: 3 }}
-        py={{ xs: 1, sm: 1.5 }}
+        px={{ xs: 1, sm: 2 }}
+        py={{ xs: 1, sm: 1 }}
         bgcolor='secondary.main'
         color='text.primary'
         className={classes.container}

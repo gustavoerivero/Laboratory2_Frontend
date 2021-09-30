@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
   Button,
   Grid,
@@ -8,7 +9,6 @@ import {
   TextField,
   Typography
 } from '@material-ui/core'
-import { login } from '../api/modules'
 import CustomizedSnackbar from './Snackbar'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
@@ -20,7 +20,7 @@ import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: 20,
-    height: '60vh',
+    height: '65vh',
     width: '80%',
     margin: '0 auto',
   },
@@ -42,11 +42,6 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
   const handleMouseDownPassword = () => setShowPassword(!showPassword)
-
-  const [res, setRes] = useState({
-    OK: '',
-    message: ''
-  })
 
   const [open, setOpen] = useState(false)
 
@@ -73,31 +68,38 @@ const Login = () => {
     status: ''
   })
 
-  useEffect(() => {
-    if (username !== '' && password !== '' && open) {
-      login(username, password)
-        .then((response) => {
-          setUser(response.data)
-          if (user.status === 'A')
-            res.OK = '1'
-          else
-            res.OK = '0'
-        })
-        .catch((error) => {
-          console.log('Error: ', error)
-          res.OK = '0'
-        })
-    }
-    if (res.OK === '1') {
-      if (user.rol === '0')
-        window.location.href = `/Home/${user.username}/0`
-      if (user.rol === '1')
-        window.location.href = `/Home/${user.username}/1`
-    }
-  })
-
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+
+  const [response, setResponse] = useState(null)
+
+  const [clickLogin, setClickLogin] = useState(null)
+
+  const login = () => {
+    axios.get(`http://192.168.1.100:8080/usuario/login/${username}/${password}`)
+      .then(res => {
+        console.log(res.data)
+        handleOpen()
+        setUser(res.data)
+        setClickLogin(true)
+        setResponse(true)
+        if (res.data.rol === '0')
+          window.location.href = `/Home/${username}/0`
+        if (res.data.rol === '1')
+          window.location.href = `/Home/${username}/1`
+        if (res.data === '') {
+          setClickLogin(false)
+          setResponse(false)
+        }
+
+      })
+      .catch((error) => {
+        console.log('Error: ', error)
+        setClickLogin(false)
+        setResponse(false)
+        handleOpen()
+      })
+  }
 
   return (
     <form autoComplete='off'>
@@ -119,6 +121,12 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              error={
+                username !== '' && username.length < 4 ? true : false
+              }
+              helperText={
+                username !== '' && username.length < 4 ? 'Debe ingresar un usuario válido' : ''
+              }
             />
           </Grid>
           <Grid item xs={12}>
@@ -155,19 +163,20 @@ const Login = () => {
             <Button
               variant='contained'
               color='primary'
-              disabled={username.length > 0 && password.length >= 8 ? false : true}
+              disabled={username.length > 4 && password.length >= 8 ? false : true}
               className={classes.button}
-              onClick={handleOpen}
+              onClick={login}
             >
               Iniciar sesión
             </Button>
             <CustomizedSnackbar
-              type={res.OK === '1' ?
+              type={response && clickLogin ?
                 'success' :
-                res.OK === '' && username !== '' && password !== '' ? 'warning' : 'error'
+                !response && clickLogin ? 'warning' : 'error'
               }
-              message={res.OK === '1' ? '¡Bienvenido!' :
-                res.OK === '' && username !== '' && password !== '' ? 'Cargando...' : 'El inicio de sesión no ha sido posible.'
+              message={response && clickLogin ?
+                'Bienvenido' :
+                !response && clickLogin ? 'Cargando...' : 'No se pudo iniciar sesión...'
               }
               open={open}
               handleClose={handleClose}

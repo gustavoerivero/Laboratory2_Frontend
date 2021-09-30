@@ -303,12 +303,10 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
                   fullWidth
                   onChange={(e) => setPassword(e.target.value)}
                   error={
-                    !RegExp.regLetters.test(password) &&
-                      (password.length !== 0 && password.length < 4) ? true : false
+                    (password.length !== 0 && password.length < 8) ? true : false
                   }
                   helperText={
-                    !RegExp.regLetters.test(password) &&
-                      (password.length !== 0 && password.length < 4) ? 'Debe ingresar una contraseña válida' : ''
+                    (password.length !== 0 && password.length < 8) ? 'Debe ingresar una contraseña válida' : ''
                   }
                 />
               </Grid>
@@ -324,6 +322,11 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
               variant='contained'
               color='primary'
               autoFocus
+              disabled={
+                name.length < 4 || lastname.length < 4 || type === '' ||
+                (type === '1' && codeProgram === '') || email.length < 4 || RegExp.regLetters.test(email)
+                || username.length < 4 || password.length < 8
+              }
             >
               {type === 'add' ? 'Registrar' : 'Guardar'}
             </Button>

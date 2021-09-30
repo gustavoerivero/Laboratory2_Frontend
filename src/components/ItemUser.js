@@ -107,8 +107,8 @@ export default function ItemUser({ key, element }) {
           programa={element.rol === '0' ? null : element.programa.codigo}
         />
         <AlertDialog
-          title='Eliminar programa'
-          content='¿Está seguro que desea eliminar este programa?'
+          title='Eliminar usuario'
+          content='¿Está seguro que desea eliminar a este usuario?'
           open={deleteConfirm}
           setOpen={setDeleteConfirm}
           handleConfirm={handleDelete}

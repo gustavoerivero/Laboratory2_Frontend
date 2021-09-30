@@ -13,10 +13,11 @@ import man_office from '../assets/img/man_office.png';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 75,
+    marginBottom: 15,
   },
   img: {
     [theme.breakpoints.up('sm')]: {
-      width: '70%',
+      width: '50%',
     },
     [theme.breakpoints.down('md')]: {
       width: '40%',
