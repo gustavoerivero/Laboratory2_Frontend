@@ -14,12 +14,22 @@ import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import PensumCard from '../components/PensumCard'
 
+import girl_laptop from '../assets/img/girl_laptop.png';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '70vh',
     margin: 70,
     padding: 25
-  }
+  },
+  img: {
+    [theme.breakpoints.up('sm')]: {
+      width: '20%',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '30%',
+    },
+  },
 }))
 
 export default function Report() {
@@ -47,51 +57,53 @@ export default function Report() {
     }
   })
 
-
-return (
-  <div>
-    <CssBaseline />
-    <NavBar auth={true} admin={rol === '0' ? true : false} />
-    <Paper elevation={3} className={classes.root} >
-      <Grid container justifyContent='center' spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant='h2' component='h2' align='center'>
-            Reporte
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant='h6' component='p'>
-            <b>Cantidad de pensums registrados:</b> {pensums.length}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-        {
-          pensums.length > 0 ?
-            pensums.map((element) => (
-              <Grid item key={element.id}>
-                <PensumCard
-                  id={element.id}
-                  code={element.codigo}
-                  date={element.fecha}
-                  description={element.descripcion}
-                  programCode={element.programa.codigo}
-                />
+  return (
+    <div>
+      <CssBaseline />
+      <NavBar auth={true} admin={rol === '0' ? true : false} />
+      <Paper elevation={3} className={classes.root} >
+        <Grid container justifyContent='center' spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant='h3' component='h2' align='center'>
+              Reporte
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} align='center' justifyContent='center'>
+            <img src={girl_laptop} alt='' className={classes.img} />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6}>
+            <Typography variant='h6' component='p'>
+              <b>Cantidad de pensums registrados:</b> {pensums.length}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider />
+          </Grid>
+          {
+            pensums.length > 0 ?
+              pensums.map((element) => (
+                <Grid item key={element.id}>
+                  <PensumCard
+                    id={element.id}
+                    code={element.codigo}
+                    date={element.fecha}
+                    description={element.descripcion}
+                    programCode={element.programa.codigo}
+                  />
+                </Grid>
+              )) :
+              <Grid item xs={12}>
+                <Typography variant='caption' component='p' className={classes.subContent}>
+                  No hay pensums registrados en el sistema.
+                </Typography>
               </Grid>
-            )) :
-            <Grid item xs={12}>
-              <Typography variant='caption' component='p' className={classes.subContent}>
-                No hay pensums registrados en el sistema.
-              </Typography>
-            </Grid>
-        }
-      </Grid>
-    </Paper>
-    <Footer />
-  </div>
-)
+          }
+        </Grid>
+      </Paper>
+      <Footer />
+    </div>
+  )
 }

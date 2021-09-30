@@ -47,7 +47,7 @@ export default function ProfileTop({ username, rol, type }) {
   })
 
   useEffect(() => {
-    if(response === null) {
+    if (response === null) {
       axios.get(`http://192.168.1.100:8080/usuario/get/username/${username}`)
         .then(res => {
           setUser(res.data)
@@ -76,14 +76,17 @@ export default function ProfileTop({ username, rol, type }) {
           </Typography>
         </Grid>
         <Grid item xs={6} md={12}>
-          <Typography style={{ fontWeight: 600 }} variant='h3' component='h2' className={classes.title} align='left'>
-            {type === 'watch' ? 'soy ' + user.nombre : user.nombre},
-          </Typography>
+          {
+            user.nombre &&
+            <Typography style={{ fontWeight: 600 }} variant='h3' component='h2' className={classes.title} align='left'>
+              {type === 'watch' ? 'soy ' + user.nombre : user.nombre},
+            </Typography>
+          }
         </Grid>
         <Grid item xs={12}>
           <Typography variant='h6' component='p' className={classes.title} align='justify'>
             {type === 'watch' ? 'en esta ventana podrá ver y/o actualizar mis datos personales.' :
-             'en esta ventana podrás ver y/o actualizar tus datos personales.'}
+              'en esta ventana podrás ver y/o actualizar tus datos personales.'}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -95,8 +98,8 @@ export default function ProfileTop({ username, rol, type }) {
                   {
                     user.correo !== '' &&
                     <Typography variant='body1' component='p' className={classes.title} align='justify'>
-                    {user.correo}
-                  </Typography>
+                      {user.correo}
+                    </Typography>
                   }
                 </Grid>
               </Grid>
@@ -106,8 +109,8 @@ export default function ProfileTop({ username, rol, type }) {
                 <Grid item xs={1} md={1}><FingerprintIcon /></Grid>
                 <Grid item xs={11} md={4}>
                   <Typography variant='body1' component='p' className={classes.title} align='justify'>
-                    {type === 'watch' ? 
-                      (user.rol === 0 ? 'Administrador' : 'Usuario') 
+                    {type === 'watch' ?
+                      (user.rol === '0' ? 'Administrador' : 'Usuario')
                       : rol === '0' ? 'Administrador' : 'Usuario'}
                   </Typography>
                 </Grid>

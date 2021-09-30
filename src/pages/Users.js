@@ -46,7 +46,7 @@ export default function Users() {
     if (users.length === 0) {
       axios.get(`http://192.168.1.100:8080/usuario/get`)
       .then(res => {
-        console.log(res.data)
+        console.log('Usuarios:', res.data)
         setUsers(res.data)
       })
       .catch(error => {

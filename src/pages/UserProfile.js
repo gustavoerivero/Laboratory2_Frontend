@@ -59,7 +59,7 @@ export default function UserProfile() {
   const [user, setUser] = useState({
     id: '',
     programa: null,
-    username: username,
+    username: profile,
     password: '',
     nombre: '',
     apellido: '',

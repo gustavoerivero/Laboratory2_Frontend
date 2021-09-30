@@ -21,11 +21,6 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
 
   const [code, setCode] = useState('')
   const [description, setDescription] = useState('')
-  const [pdf, setPdf] = useState(null)
-
-  const uploadFiles = (e) => {
-    setPdf(e)
-  }
 
   const [update, setUpdate] = useState(false)
 
@@ -84,6 +79,39 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
     }
   })
 
+  const [files, setFiles] = useState(null)
+
+  const uploadFiles = e => {
+    setFiles(e)
+  }
+
+  const [upload, setUpload] = useState(null)
+  
+  const handleUploadClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    setUpload(null)
+  }
+
+  const insertFiles = async () => {
+    
+    const f = new FormData()
+
+    f.append('file', files[0])
+
+    await axios.post(`http://192.168.1.100:8080/file/upload/${code}`, f, 
+      { headers: {'Content-Type': 'multipart/form-data'} })
+      .then(res => {
+        console.log(res.data)
+        setUpload(true)
+      })
+      .catch(error => {
+        console.log(error)
+        setUpload(false)
+      })
+  }
+
   return (
     <div>
       <form autoComplete='off'>
@@ -140,23 +168,38 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
                   }
                 />
               </Grid>
-
+              
               <Grid item xs={9}>
-                <input
-                  accept="application/pdf"
-                  style={{ display: 'none' }}
-                  id="raised-button-file"
-                  type="file"
+                <TextField 
+                  type='file'
+                  name='files'  
+                  fullWidth
+                  onChange={(e) => uploadFiles(e.target.files)}                
                 />
               </Grid>
 
-              <Grid item xs={3} alignItems='center' justifyContent='center'>
-                <label htmlFor="contained-button-file">
-                  <Button variant="contained" color="primary" size="large">
-                    Subir
-                  </Button>
-                </label>
+              <Grid item xs={3}>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  size='large'
+                  onClick={() => insertFiles()}
+                  disabled={files === null || code === ''}
+                >
+                  Subir
+                </Button>
               </Grid>
+
+              {
+                upload !== null ?
+                <CustomizedSnackbar
+                  type={upload ? 'success' : !upload ? 'error' : 'warning'}
+                  message={upload ? 'El PDF se ha registrado con éxito' : !upload ? 'No se ha podido guardar el PDF.' : 'Cargando...'}
+                  open={upload}
+                  handleClose={handleUploadClose}
+                />
+                : ''
+            }
 
             </Grid>
           </DialogContent>
@@ -170,8 +213,8 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
               color='primary'
               autoFocus
               disabled={
-                (code === '' || code.length < 4) ||
-                (description === ''  || description.length < 4)
+                ((code === '' && code.length < 4) ||
+                (description === ''  && description.length < 4)) || files === null
               }
             >
               {type === 'add' ? 'Registrar' : 'Guardar'}
@@ -180,7 +223,7 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
               response !== null ?
                 <CustomizedSnackbar
                   type={response ? 'success' : !response ? 'error' : 'warning'}
-                  message={response ? 'El programa se ha guardado con éxito' : !response ? 'No se ha podido guardar el programa' : 'Cargando...'}
+                  message={response ? 'El pensum se ha guardado con éxito' : !response ? 'No se ha podido guardar el pensum.' : 'Cargando...'}
                   open={response}
                   handleClose={handleClose}
                 />
