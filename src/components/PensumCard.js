@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
   Card,
   CardActionArea,
@@ -6,11 +7,14 @@ import {
   CardContent,
   Button,
   Typography
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import PensumDialog from './PensumDialog';
+} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import PensumDialog from './PensumDialog'
+import CustomizedSnackbar from './Snackbar'
+import ViewPensumDialog from './ViewPensum'
+import AlertDialog from './Dialog'
 
-export default function PensumCard({ id, name, code, date, description }) {
+export default function PensumCard({ id, code, date, description, programCode }) {
 
   const useStyles = makeStyles({
     root: {
@@ -23,23 +27,63 @@ export default function PensumCard({ id, name, code, date, description }) {
       padding: 0,
       margin: 0,
     },
-  });
+  })
 
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const handleOpen = () => {
-    setOpen(!open);
+    setOpen(!open)
+  }
+
+  const [deleteButton, setDeleteButton] = useState(false)
+
+  const handleDelete = () => {
+    setDeleteButton(!deleteButton)
+  }
+
+  const [response, setResponse] = useState(null)
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    handleOpen()
+  }
+
+  const [deleteConfirm, setDeleteConfirm] = useState(false)
+
+  const handleConfirm = () => {
+    setDeleteConfirm(true)
+  }
+
+  useEffect(() => {
+    if (deleteButton) {
+      axios.delete(`http://192.168.1.100:8080/pensum/delete/${Number(id)}`)
+        .then(res => {
+          console.log(res.data)
+          handleDelete()
+          setResponse(true)
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+        })
+    }
+  })
+  
+  const [openView, setOpenView] = useState(false);
+  
+  const handleOpenView = () => {
+    setOpenView(!openView)
   }
 
   return (
     <Card className={classes.root} elevation={5}>
       <CardActionArea className={classes.secondRoot}>
         <CardContent>
-          <Typography gutterBottom variant='h5' component='h2'>
-            {name}
-          </Typography>
-          <Typography variant='body2' color='textSecondary' component='p'>
+          <Typography variant='h5' color='textSecondary' component='p'>
             {code}
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
@@ -48,25 +92,47 @@ export default function PensumCard({ id, name, code, date, description }) {
           <Typography variant='body2' color='textSecondary' component='p'>
             {description}
           </Typography>
-          
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='primary'>
+        <Button size='small' color='secondary' onClick={handleConfirm}>
+          Eliminar
+        </Button>
+        <AlertDialog
+          title='Eliminar programa'
+          content='¿Está seguro que desea eliminar este programa?'
+          open={deleteConfirm}
+          setOpen={setDeleteConfirm}
+          handleConfirm={handleDelete}
+        />
+        <CustomizedSnackbar
+          type={response ? 'success' : !response ? 'warning' : 'error'}
+          message={response ? 'El programa se ha eliminado con éxito' : !response ? 'Cargando...' : 'No se ha podido eliminar el programa'}
+          open={response}
+          handleClose={handleClose}
+        />
+        <Button size='small' color='primary' onClick={handleOpenView}>
           Ver
         </Button>
+        <ViewPensumDialog
+          descFunction={description}
+          fechaFunction={date}
+          codigoFunction={code}
+          buttonFunctionName='PDF'
+          handleOpen={handleOpenView}
+          open={openView}
+        />
         <Button size='small' color='secondary' onClick={handleOpen}>
           Editar
         </Button>
-         <PensumDialog
-            nameFunction='Modificar pensum'
-            contentFunction='Ingrese la información del pensum.'
-            buttonFunctionName='Guardar'
-            handleOpen={handleOpen}
-            open={open}
-            pensumId={id}
-            />
+        <PensumDialog
+          id={id}
+          programCode={programCode}
+          type='update'
+          handleOpen={handleOpen}
+          open={open}
+        />
       </CardActions>
     </Card>
-  );
+  )
 }

@@ -48,11 +48,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Users() {
+export default function UserProfile() {
 
   const classes = useStyles()
 
-  const { username, rol } = useParams() 
+  const { profile, username, rol } = useParams() 
 
   const [response, setResponse] = useState(null)
 
@@ -69,7 +69,7 @@ export default function Users() {
 
   useEffect(() => {
     if (response === null) {
-      axios.get(`http://192.168.1.100:8080/usuario/get/username/${username}`)
+      axios.get(`http://192.168.1.100:8080/usuario/get/username/${profile}`)
         .then(res => {
           console.log(res.data)
           setUser(res.data)
@@ -90,8 +90,9 @@ export default function Users() {
         <Grid item xs={12} sm={12} md={12}>
           <Paper className={classes.paper} elevation={1}>
             <ProfileTop 
-              username={username}
-              rol={rol}
+              username={user.username}
+              rol={user.rol}
+              type='watch'
             />
             <Grid container spacing={1} justifyContent='center'>
               <Grid item xs={12} md={4}>

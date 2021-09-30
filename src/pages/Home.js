@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 import {
   Button,
   CssBaseline,
@@ -9,19 +9,19 @@ import {
   Paper,
   Tooltip,
   Typography
-} from '@material-ui/core';
-import NavBar from '../components/NavBar';
-import ColorCard from '../components/ColorCard';
-import ProgramProfile from '../components/ProgramProfile';
-import ProgramDialog from '../components/ProgramDialog';
-import Footer from '../components/Footer';
+} from '@material-ui/core'
+import NavBar from '../components/NavBar'
+import ColorCard from '../components/ColorCard'
+import ProgramProfile from '../components/ProgramProfile'
+import ProgramDialog from '../components/ProgramDialog'
+import Footer from '../components/Footer'
 
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 
-import '../assets/css/index.css';
-import '@fontsource/roboto';
+import '../assets/css/index.css'
+import '@fontsource/roboto'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,13 +83,13 @@ export default function Home() {
     }
   })
 
-  const classes = useStyles();
+  const classes = useStyles()
 
-  const [open, setOpen] = useState(false);
-  const [programSelect, setProgramSelect] = useState(null);
+  const [open, setOpen] = useState(false)
+  const [programSelect, setProgramSelect] = useState(null)
 
   const handleOpen = () => {
-    setOpen(!open);
+    setOpen(!open)
   }
 
   return (

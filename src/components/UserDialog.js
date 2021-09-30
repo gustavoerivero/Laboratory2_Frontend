@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
   Button,
   Dialog,
@@ -6,47 +7,149 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  FormControl,
+  InputLabel,
+  Select,
   Grid,
   useMediaQuery,
   TextField,
-} from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
+} from '@material-ui/core'
+import { useTheme } from '@material-ui/core/styles'
+import CustomizedSnackbar from './Snackbar'
 
-import ComboBox from './ComboBox';
+import RegExp from '../static/RegExp'
 
-import RegExp from '../static/RegExp';
+export default function UserDialog({ dialogType, nameFunction, contentFunction, open, handleOpen, user, mail, pass, names, lastnames, userType, program }) {
 
-export default function UserDialog({ nameFunction, contentFunction, open, handleOpen, buttonFunctionName, buttonFunction, itemData, user, mail, pass, names, lastnames, }) {
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [type, setType] = useState('')
+  const [codeProgram, setCodeProgram] = useState('')
 
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [lastname, setLastname] = useState('');
-  //const [rol, setRol] = useState('');
+  const [programs, setPrograms] = useState([])
 
-  const roles = [
-    { rol: 'ADMIN' },
-    { rol: 'INFOR-USER' },
-    { rol: 'PRODU-USER' },
-    { rol: 'TELEM-USER' },
-    { rol: 'FISIC-USER' },
-    { rol: 'MATEM-USER' }];
+  const [update, setUpdate] = useState(false)
 
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-    checkedF: true,
-    checkedG: true,
-  });
+  const [response, setResponse] = useState(null)
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  const handleUpdate = () => {
+    setUpdate(!update)
+  }
 
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    handleOpen()
+  }
+
+  useEffect(() => {
+    if (programs.length === 0) {
+      axios.get(`http://192.168.1.100:8080/programa/get/codes`)
+        .then(res => {
+          console.log(res.data)
+          setPrograms(res.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+    if (update && dialogType === 'add' && type === '0') {
+      axios.post(`http://192.168.1.100:8080/usuario/add`, {
+        username: username,
+        password: password,
+        nombre: name,
+        apellido: lastname,
+        correo: email,
+        rol: type
+      })
+        .then(res => {
+          console.log(res)
+          setResponse(true)
+          handleUpdate()
+          handleOpen()
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+          handleUpdate()
+          handleOpen()
+        })
+    } else if (update && dialogType === 'add' && type === '1') {
+      axios.post(`http://192.168.1.100:8080/usuario/add/${codeProgram}`, {
+        username: username,
+        password: password,
+        nombre: name,
+        apellido: lastname,
+        correo: email,
+        rol: type
+      })
+        .then(res => {
+          console.log(res)
+          setResponse(true)
+          handleUpdate()
+          handleOpen()
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+          handleUpdate()
+          handleOpen()
+        })
+    } else if (update && dialogType === 'update' && type === '0') {
+      axios.put(`http://192.168.1.100:8080/usuario/update/${username}`, {
+        username: username,
+        password: password,
+        nombre: name,
+        apellido: lastname,
+        correo: email,
+        rol: type
+      })
+        .then(res => {
+          console.log(res)
+          setResponse(true)
+          handleUpdate()
+          handleOpen()
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+          handleUpdate()
+          handleOpen()
+        })
+    } else if (update && dialogType === 'update' && type === '1') {
+      axios.put(`http://192.168.1.100:8080/usuario/update/${username}/${codeProgram}`, {
+        username: username,
+        password: password,
+        nombre: name,
+        apellido: lastname,
+        correo: email,
+        rol: type
+      })
+        .then(res => {
+          console.log(res)
+          setResponse(true)
+          handleUpdate()
+          handleOpen()
+          window.location.href = window.location.href
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+          handleUpdate()
+          handleOpen()
+        })
+    }
+  })
 
   return (
     <div>
@@ -71,9 +174,112 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
 
               <Grid item xs={12}>
                 <TextField
+                  id='user-name'
+                  variant='filled'
+                  label='Nombre'
+                  defaultValue={names}
+                  required
+                  fullWidth
+                  onChange={(e) => setName(e.target.value)}
+                  error={
+                    name.length !== 0 && name.length < 4 ? true : false
+                  }
+                  helperText={
+                    name.length !== 0 && name.length < 4 ? 'Debe ingresar un nombre válido' : ''
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id='user-lastname'
+                  variant='filled'
+                  label='Apellido'
+                  defaultValue={lastnames}
+                  required
+                  fullWidth
+                  onChange={(e) => setLastname(e.target.value)}
+                  error={
+                    lastname.length !== 0 && lastname.length < 4 ? true : false
+                  }
+                  helperText={
+                    lastname.length !== 0 && lastname.length < 4 ? 'Debe ingresar un apellido válido' : ''
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl required variant='filled' fullWidth>
+                  <InputLabel>Tipo de usuario</InputLabel>
+                  <Select
+                    native
+                    value={type}
+                    defaultValue={userType}
+                    onChange={(e) => setType(e.target.value)}
+                    label='Tipo de usuario'
+                    inputProps={{
+                      name: 'userType',
+                      id: 'user-type'
+                    }}
+                  >
+                    <option aria-label="none" value="" />
+                    <option value={'0'}>Administrador</option>
+                    <option value={'1'}>Usuario</option>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              {
+                type !== '0' ?
+                  <Grid item xs={12}>
+                    <FormControl required variant='filled' fullWidth>
+                      <InputLabel>Programa asociado</InputLabel>
+                      <Select
+                        native
+                        value={codeProgram}
+                        defaulValue={program}
+                        onChange={(e) => setCodeProgram(e.target.value)}
+                        label='Programa asociado'
+                        inputProps={{
+                          name: 'program',
+                          id: 'program'
+                        }}
+                      >
+                        <option aria-label="none" value="" />
+                        {programs.length > 0 && programs.map((element, i) => (
+                          <option key={i} value={element}>{element}</option>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  : ''
+              }
+
+              <Grid item xs={12}>
+                <TextField
+                  id='user-email'
+                  variant='filled'
+                  label='Correo electrónico'
+                  defaultValue={mail}
+                  required
+                  fullWidth
+                  onChange={(e) => setEmail(e.target.value)}
+                  error={
+                    !RegExp.regLetters.test(email) &&
+                      (email.length !== 0 && email.length < 4) ? true : false
+                  }
+                  helperText={
+                    !RegExp.regLetters.test(email) &&
+                      (email.length !== 0 && email.length < 4) ? 'Debe ingresar un correo electrónico válido' : ''
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
                   id='user-username'
                   variant='filled'
-                  label='Username'
+                  label='Usuario'
                   defaultValue={user}
                   required
                   fullWidth
@@ -89,29 +295,9 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
 
               <Grid item xs={12}>
                 <TextField
-                  id='user-email'
-                  variant='filled'
-                  label='Correo'
-                  defaultValue={mail}
-                  required
-                  fullWidth
-                  onChange={(e) => setEmail(e.target.value)}
-                  error={
-                    !RegExp.regLetters.test(email) &&
-                      (email.length !== 0 && email.length < 4) ? true : false
-                  }
-                  helperText={
-                    !RegExp.regLetters.test(email) &&
-                      (email.length !== 0 && email.length < 4) ? 'Debe ingresar un Correo válido' : ''
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
                   id='user-password'
                   variant='filled'
-                  label='Password'
+                  label='Contraseña'
                   defaultValue={pass}
                   required
                   fullWidth
@@ -122,52 +308,9 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
                   }
                   helperText={
                     !RegExp.regLetters.test(password) &&
-                      (password.length !== 0 && password.length < 4) ? 'Debe ingresar una Contraseña válida' : ''
+                      (password.length !== 0 && password.length < 4) ? 'Debe ingresar una contraseña válida' : ''
                   }
                 />
-              </Grid>
-
-
-              <Grid item xs={12}>
-                <TextField
-                  id='user-name'
-                  variant='filled'
-                  label='Nombre'
-                  defaultValue={names}
-                  required
-                  fullWidth
-                  onChange={(e) => setName(e.target.value)}
-                  error={
-                    name.length !== 0 && name.length < 4 ? true : false
-                  }
-                  helperText={
-                    name.length !== 0 && name.length < 4 ? 'Debe ingresar un Nombre válido' : ''
-                  }
-                />
-              </Grid>
-
-
-              <Grid item xs={12}>
-                <TextField
-                  id='user-lastname'
-                  variant='filled'
-                  label='Apellido'
-                  defaultValue={lastnames}
-                  required
-                  fullWidth
-                  onChange={(e) => setLastname(e.target.value)}
-                  error={
-                    lastname.length !== 0 && lastname.length < 4 ? true : false
-                  }
-                  helperText={
-                    lastname.length !== 0 && lastname.length < 4 ? 'Debe ingresar un Apellido válido' : ''
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <ComboBox
-                  cbdata={roles} />
               </Grid>
 
             </Grid>
@@ -177,24 +320,26 @@ export default function UserDialog({ nameFunction, contentFunction, open, handle
               Cancelar
             </Button>
             <Button
-              onClick={handleOpen}
+              onClick={handleUpdate}
               variant='contained'
               color='primary'
               autoFocus
-              disabled={
-                (username !== '' || username.length < 4) &&
-                (email !== '' || email.length < 4) &&
-                (password !== '' || password.length < 4) &&
-                (name !== '' || name.length < 4) &&
-                !RegExp.regLetters.test(lastname) &&
-                (lastname !== '' || lastname.length < 4)
-              }
             >
-              {buttonFunctionName}
+              {type === 'add' ? 'Registrar' : 'Guardar'}
             </Button>
+            {
+              response !== null ?
+                <CustomizedSnackbar
+                  type={response ? 'success' : !response ? 'error' : 'warning'}
+                  message={response ? 'El usuario se ha registrado con éxito' : !response ? 'No se ha podido modificar el usuario' : 'Cargando...'}
+                  open={response}
+                  handleClose={handleClose}
+                />
+                : ''
+            }
           </DialogActions>
         </Dialog>
       </form>
     </div>
-  );
+  )
 }

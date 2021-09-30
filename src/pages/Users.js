@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
   Button,
   CssBaseline,
   Fab,
   Grid,
   Tooltip,
-  Typography,
-} from '@material-ui/core';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
+  Typography
+} from '@material-ui/core'
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer'
 import ListItemUser from '../components/ListItemUsers'
-import UserDialog from '../components/UserDialog';
+import UserDialog from '../components/UserDialog'
 
-import TextField from '@material-ui/core/TextField';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 
-import '../assets/css/index.css';
-import '@fontsource/roboto';
+import '../assets/css/index.css'
+import '@fontsource/roboto'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,23 +40,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Users() {
 
-  const data = [
-    { id: '0', name: 'Luis', lastname: 'Valladares', username: 'luisvalla', email: 'luisprueba@gmail.com', rol: 'ADMIN', status: 'A' },
-    { id: '1', name: 'Gustavo', lastname: 'Rivero', username: 'gusrive', email: 'gustprueba@gmail.com', rol: 'ADMIN', status: 'I' },
-    { id: '2', name: 'Maria', lastname: 'Paredes', username: 'mapar', email: 'mariaprueba@gmail.com', rol: 'ADMIN', status: 'A' },
-    { id: '3', name: 'Jose', lastname: 'Medina', username: 'medina69', email: 'joseprueba@gmail.com', rol: 'USER', status: 'A' },
-    { id: '4', name: 'Luis', lastname: 'Campos', username: 'camposluis', email: 'luiscprueba@gmail.com', rol: 'USER', status: 'A' },
-  ];
+  const [users, setUsers] = useState([])
 
-  const classes = useStyles();
+  useEffect(() => {
+    if (users.length === 0) {
+      axios.get(`http://192.168.1.100:8080/usuario/get`)
+      .then(res => {
+        console.log(res.data)
+        setUsers(res.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    }    
+  })
 
-  const [auth, setAuth] = useState(true);
-  const [admin, setAdmin] = useState(true);
+  const classes = useStyles()
 
-  const [open, setOpen] = useState(false);
+  const [auth, setAuth] = useState(true)
+  const [admin, setAdmin] = useState(true)
+
+  const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
-    setOpen(!open);
+    setOpen(!open)
   }
 
   return (
@@ -73,15 +80,11 @@ export default function Users() {
 
         <Grid container spacing={1} justifyContent='center'>
 
-          <Grid item xs={11} md={7} align='center'>
+          <Grid item xs={10} md={10} align='center'>
             <Typography variant='caption' component='p' className={classes.title} align='justify'>
-              A continuación, se listarán todos los Usuarios.
+              A continuación, se listarán todos los usuarios.
               Por favor, seleccione el que desee revisar.
             </Typography>
-          </Grid>
-
-          <Grid item xs={8} md={3} align='left'>
-            <TextField id="user-search" label="Buscar" type="search" fullWidth/>
           </Grid>
 
           <Grid item xs={1} md={1} align='right'>
@@ -91,6 +94,7 @@ export default function Users() {
               </Fab>
             </Tooltip>
             <UserDialog
+              dialogType='add'
               nameFunction='Agregar Usuario'
               contentFunction='Ingrese la información del Usuario a agregar. 
                     El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
@@ -102,7 +106,7 @@ export default function Users() {
         </Grid>
 
         <Grid item xs={12} md={11} align='center'>
-          <ListItemUser item={data} />
+          <ListItemUser item={users} />
         </Grid>
 
       </Grid>

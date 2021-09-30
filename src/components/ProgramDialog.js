@@ -58,7 +58,7 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
           handleUpdate()
           handleOpen()
         })
-    } else if (update && type === 'update') {
+    } else if (update && type === 'update' && id !== null) {
       axios.put(`http://192.168.1.100:8080/programa/update/id/${Number(id)}`, {
         codigo: code,
         nombre: name,
@@ -159,7 +159,7 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
               Guardar
             </Button>
             {
-              response ?
+              response !== null ?
                 <CustomizedSnackbar
                   type={response ? 'success' : !response ? 'error' : 'warning'}
                   message={response ? 'El programa se ha guardado con éxito' : !response ? 'No se ha podido guardar el programa' : 'Cargando...'}

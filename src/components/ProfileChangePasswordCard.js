@@ -1,21 +1,26 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import SaveIcon from '@material-ui/icons/Save';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import clsx from 'clsx'
+import { makeStyles } from '@material-ui/core/styles'
+import {
+  IconButton,
+  Card,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+  TextField
+} from '@material-ui/core'
+import SaveIcon from '@material-ui/icons/Save'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+
+import CustomizedSnackbar from './Snackbar'
 
 const useStyles = makeStyles({
   root: {
-    maxHeight: 340,
+    maxHeight: 350,
     padding: 10
   },
   bullet: {
@@ -29,51 +34,98 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-});
+})
 
-export default function ChangePasswordCard() {
-  const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+export default function ChangePasswordCard({ user }) {
 
-  const [values1, setValues1] = React.useState({
+  const classes = useStyles()
+
+  const [values1, setValues1] = useState({
     showPassword: false,
-  });
-  const [values2, setValues2] = React.useState({
+  })
+  const [values2, setValues2] = useState({
     showPassword: false,
-  });
-  const [values3, setValues3] = React.useState({
+  })
+  const [values3, setValues3] = useState({
     showPassword: false,
-  });
+  })
 
   const handleChange1 = (prop) => (event) => {
-    setValues1({ ...values1, [prop]: event.target.value });
-  };
+    setValues1({ ...values1, [prop]: event.target.value })
+  }
   const handleChange2 = (prop) => (event) => {
-    setValues2({ ...values2, [prop]: event.target.value });
-  };
+    setValues2({ ...values2, [prop]: event.target.value })
+  }
   const handleChange3 = (prop) => (event) => {
-    setValues3({ ...values3, [prop]: event.target.value });
-  };
+    setValues3({ ...values3, [prop]: event.target.value })
+  }
 
   const handleClickShowPassword1 = () => {
-    setValues1({ ...values1, showPassword: !values1.showPassword });
-  };
+    setValues1({ ...values1, showPassword: !values1.showPassword })
+  }
   const handleClickShowPassword2 = () => {
-    setValues2({ ...values2, showPassword: !values2.showPassword });
-  };
+    setValues2({ ...values2, showPassword: !values2.showPassword })
+  }
   const handleClickShowPassword3 = () => {
-    setValues3({ ...values3, showPassword: !values3.showPassword });
-  };
+    setValues3({ ...values3, showPassword: !values3.showPassword })
+  }
 
   const handleMouseDownPassword1 = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
   const handleMouseDownPassword2 = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
   const handleMouseDownPassword3 = (event) => {
-    event.preventDefault();
-  };
+    event.preventDefault()
+  }
+
+  
+  const [update, setUpdate] = useState(false)
+
+  const handleUpdate = () => {
+    setUpdate(!update)
+  }
+
+  const [open, setOpen] = useState(false)
+
+  const handleOpen = () => {
+    setOpen(!open)
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    handleOpen()
+  }
+
+  const [response, setResponse] = useState(null)
+
+  useEffect(() => {
+    if (update && response) {
+      axios.put(`http://192.168.1.100:8080/usuario/update/${user.username}` +
+        (user.rol === '0' ? '' : `/${user.programa.codigo}`), {
+        username: user.username,
+        password: values3.password,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        correo: user.correo,
+        rol: user.rol,
+        status: 'A'
+      })
+        .then(res => {
+          console.log(res.data)
+          handleUpdate()
+          setResponse(true)
+        })
+        .catch(error => {
+          console.log(error)
+          setResponse(false)
+        })
+    }
+  })
+
 
   return (
     <Card className={classes.root} elevation={3}>
@@ -159,8 +211,35 @@ export default function ChangePasswordCard() {
 
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" variant="contained" startIcon={<SaveIcon />}>Cambiar</Button>
+        <Button 
+          size="small" 
+          color="primary" 
+          variant="contained" 
+          startIcon={<SaveIcon />}
+          onClick={handleOpen}
+          disabled={
+            user.password !== values1.password ||
+            values2.password !== values3.password ||
+            user.password === values2.password ||
+            user.password.length === 0 ||
+            values1.password.length === 0 ||
+            values2.password.length === 0 ||
+            values3.password.length === 0
+          }
+        >
+          Cambiar
+        </Button>
+        {
+          response !== null ?
+            <CustomizedSnackbar
+              type={response ? 'success' : !response ? 'error' : 'warning'}
+              message={response ? 'El usuario se ha registrado con éxito' : !response ? 'No se ha podido modificar el usuario' : 'Cargando...'}
+              open={response}
+              handleClose={handleClose}
+            />
+            : ''
+        }
       </CardActions>
     </Card>
-  );
+  )
 }

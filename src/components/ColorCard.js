@@ -119,7 +119,7 @@ export default function ColorCard({ rol, id, title, content, haveColor, color, h
       <CardActions>
         {rol === '0' ?
           <>
-            <Button size='small' color='secondary' variant='filled' onClick={handleConfirm}>
+            <Button size='small' color='secondary' onClick={handleConfirm}>
               Eliminar
             </Button>
             <AlertDialog 

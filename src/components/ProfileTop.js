@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function ProfileTop({ username, rol }) {
+export default function ProfileTop({ username, rol, type }) {
 
   const classes = useStyles()
 
@@ -41,7 +41,7 @@ export default function ProfileTop({ username, rol }) {
     password: '',
     nombre: '',
     apellido: '',
-    corre: '',
+    correo: '',
     rol: '',
     status: ''
   })
@@ -77,12 +77,13 @@ export default function ProfileTop({ username, rol }) {
         </Grid>
         <Grid item xs={6} md={12}>
           <Typography style={{ fontWeight: 600 }} variant='h3' component='h2' className={classes.title} align='left'>
-            {user.nombre},
+            {type === 'watch' ? 'soy ' + user.nombre : user.nombre},
           </Typography>
         </Grid>
         <Grid item xs={12}>
           <Typography variant='h6' component='p' className={classes.title} align='justify'>
-            en esta ventana podrás ver y/o actualizar tus datos personales.
+            {type === 'watch' ? 'en esta ventana podrá ver y/o actualizar mis datos personales.' :
+             'en esta ventana podrás ver y/o actualizar tus datos personales.'}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -91,9 +92,12 @@ export default function ProfileTop({ username, rol }) {
               <Grid container spacing={1} alignItems="flex-end">
                 <Grid item xs={1} md={1}><EmailIcon /></Grid>
                 <Grid item xs={11} md={4}>
-                  <Typography variant='body1' component='p' className={classes.title} align='justify'>
+                  {
+                    user.correo !== '' &&
+                    <Typography variant='body1' component='p' className={classes.title} align='justify'>
                     {user.correo}
                   </Typography>
+                  }
                 </Grid>
               </Grid>
             </Grid>
@@ -102,7 +106,9 @@ export default function ProfileTop({ username, rol }) {
                 <Grid item xs={1} md={1}><FingerprintIcon /></Grid>
                 <Grid item xs={11} md={4}>
                   <Typography variant='body1' component='p' className={classes.title} align='justify'>
-                    {rol === '0' ? 'Administrador' : 'Usuario'}
+                    {type === 'watch' ? 
+                      (user.rol === 0 ? 'Administrador' : 'Usuario') 
+                      : rol === '0' ? 'Administrador' : 'Usuario'}
                   </Typography>
                 </Grid>
               </Grid>

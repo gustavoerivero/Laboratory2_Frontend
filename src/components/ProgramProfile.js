@@ -62,8 +62,8 @@ export default function ProgramProfile({ id }) {
           console.log(error)
           setResponse(false)
         })
-    } else if (id && response === true && pensums.length === 0) {
-      axios.get(`http://192.1.100:8080/pensum/get/programa/${program.codigo}`)
+    } else if (response === true && pensums.length === 0) {
+      axios.get(`http://192.168.1.100:8080/pensum/get/programa/${program.codigo}`)
         .then(res => {
           console.log(res.data)
           setPensums(res.data)
@@ -74,28 +74,6 @@ export default function ProgramProfile({ id }) {
         })
     }
   })
-
-  const pensum = [
-    {
-      id: '0',
-      codigo: 'PROD250921',
-      name: 'Pensum Procucción 2021-2',
-      desc: 'Pensum del programa de Ing. Producción, Lapso 2021-2',
-      date: '2021-09-25',
-      cod_programa: '1',
-      pdf: 'pensum'
-    },
-    {
-      id: '1',
-      codigo: 'INF250921',
-      name: 'Pensum Informática 2021-2',
-      desc: 'Pensum del programa de Ing. Informática, Lapso 2021-2',
-      date: '2021-09-25',
-      cod_programa: '0',
-      pdf: 'pensum'
-    },
-
-  ]
 
   const [open, setOpen] = useState(false)
 
@@ -118,6 +96,9 @@ export default function ProgramProfile({ id }) {
               <li>
                 <b>Código del Programa: </b>{program.codigo}
               </li>
+              <li>
+                <b>Cantidad de Pensums: </b>{pensums.length}
+              </li>
             </Typography>
           </Grid>
           <Grid item xs={12}><Divider /></Grid>
@@ -132,25 +113,24 @@ export default function ProgramProfile({ id }) {
                 <AddIcon />
               </Fab>
             </Tooltip>
-            <PensumDialog
-              nameFunction='Agregar pensum'
-              contentFunction='Ingrese la información del pensum a agregar. 
-              El botón de Agregar no se habilitará hasta que ingrese la información requerida.'
-              buttonFunctionName='Agregar'
+            <PensumDialog       
+              id={null}
+              programCode={program.codigo}
+              type='add'
               handleOpen={handleOpen}
               open={open}
             />
           </Grid>
           {
-            pensum.length > 0 ?
-              pensum.map((element) => (
+            pensums.length > 0 ?
+              pensums.map((element) => (
                 <Grid item key={element.id}>
                   <PensumCard
                     id={element.id}
-                    name={element.name}
-                    code={element.code}
-                    date={element.date}
-                    description={element.desc}
+                    code={element.codigo}
+                    date={element.fecha}
+                    description={element.descripcion}
+                    programCode={program.codigo}
                   />
                 </Grid>
               )) :
