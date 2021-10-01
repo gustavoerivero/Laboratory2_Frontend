@@ -130,6 +130,7 @@ export default function ProgramProfile({ id }) {
                     code={element.codigo}
                     date={element.fecha}
                     description={element.descripcion}
+                    dep={element.dep}
                     programCode={program.codigo}
                   />
                 </Grid>

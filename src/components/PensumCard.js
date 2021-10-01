@@ -14,7 +14,7 @@ import CustomizedSnackbar from './Snackbar'
 import ViewPensumDialog from './ViewPensum'
 import AlertDialog from './Dialog'
 
-export default function PensumCard({ id, code, date, description, programCode }) {
+export default function PensumCard({ id, code, date, description, programCode, dep }) {
 
   const useStyles = makeStyles({
     root: {
@@ -91,6 +91,9 @@ export default function PensumCard({ id, code, date, description, programCode })
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
             {description}
+          </Typography>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            dep
           </Typography>
         </CardContent>
       </CardActionArea>
