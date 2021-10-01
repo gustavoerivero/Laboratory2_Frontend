@@ -10,17 +10,23 @@ import {
   Grid,
   useMediaQuery,
   TextField,
+  InputLabel,
+  Select,
+  FormControl
 } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import CustomizedSnackbar from './Snackbar'
 
-export default function PensumDialog({ id, programCode, type, open, handleOpen }) {
+export default function PensumDialog({ id, programCode, type, open, handleOpen, department }) {
 
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [code, setCode] = useState('')
   const [description, setDescription] = useState('')
+  const [codeDepartment, setCodeDepartment] = useState('')
+
+  const [departments, setDepartments] = useState([])
 
   const [update, setUpdate] = useState(false)
 
@@ -38,6 +44,16 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
   }
 
   useEffect(() => {
+    if (departments.length === 0) {
+      axios.get(`http://192.168.1.100:8080/departamento/get/codes`)
+        .then(res => {
+          console.log(res.data)
+          setDepartments(res.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
     if (update && type === 'add') {
       axios.post(`http://192.168.1.100:8080/pensum/add/${programCode}`, {
         codigo: code,
@@ -167,6 +183,28 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen }
                       (description.length !== 0 && description.length < 4) ? 'Debe ingresar una descripción válido' : ''
                   }
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                    <FormControl required variant='filled' fullWidth>
+                      <InputLabel>Departamento asociado</InputLabel>
+                      <Select
+                        native
+                        value={codeDepartment}
+                        defaulValue={department}
+                        onChange={(e) => setCodeDepartment(e.target.value)}
+                        label='Departamento asociado'
+                        inputProps={{
+                          name: 'department',
+                          id: 'department'
+                        }}
+                      >
+                        <option aria-label="none" value="" />
+                        {departments.length > 0 && departments.map((element, i) => (
+                          <option key={i} value={element}>{element}</option>
+                        ))}
+                      </Select>
+                    </FormControl>
               </Grid>
               
               <Grid item xs={9}>
