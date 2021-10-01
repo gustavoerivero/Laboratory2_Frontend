@@ -12,7 +12,7 @@ import {
 import CustomizedSnackbar from './Snackbar'
 import DescriptionIcon from '@material-ui/icons/Description'
 
-export default function ViewPensumDialog({  descFunction, fechaFunction, codigoFunction, programaFunction, open, handleOpen, buttonFunctionName }) {
+export default function ViewPensumDialog({  descFunction, fechaFunction, codigoFunction, programaFunction, departmentFunction, open, handleOpen, buttonFunctionName }) {
   
   const [response, setResponse] = useState(null)
 
@@ -69,6 +69,9 @@ export default function ViewPensumDialog({  descFunction, fechaFunction, codigoF
                 </Grid>
                 <Grid item xs={12}>
                   {codigoFunction}
+                </Grid>
+                <Grid item xs={12}>
+                  {departmentFunction}
                 </Grid>
                 <Grid item xs={12}>
                   {programaFunction}

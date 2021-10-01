@@ -45,7 +45,7 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen, 
 
   useEffect(() => {
     if (departments.length === 0) {
-      axios.get(`http://192.168.1.100:8080/departamentos/get/codes`)
+      axios.get(`http://192.168.1.100:8080/departamentos/get/codes/names`)
         .then(res => {
           console.log(res.data)
           setDepartments(res.data)
@@ -201,7 +201,7 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen, 
                       >
                         <option aria-label="none" value="" />
                         {departments.length > 0 && departments.map((element, i) => (
-                          <option key={i} value={element}>{element}</option>
+                          <option key={i} value={element[0]}>{element[1]}</option>
                         ))}
                       </Select>
                     </FormControl>

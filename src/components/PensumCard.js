@@ -121,6 +121,7 @@ export default function PensumCard({ id, code, date, description, programCode, d
           descFunction={description}
           fechaFunction={date}
           codigoFunction={code}
+          departmentFunction={department}
           buttonFunctionName='PDF'
           handleOpen={handleOpenView}
           open={openView}

@@ -63,7 +63,8 @@ export default function ItemDep({ key, element }) {
   return (
     <ListItem id={key}>
       <ListItemText
-        primary={'Código: ' + element.codigo + " / Nombre: " + element.nombre + " / Descripción: " + element.descripcion }
+        primary={element.codigo + " / " + element.nombre }
+        secondary={'Descripción: ' + element.descripcion}
       />
       <ListItemSecondaryAction >        
         <Tooltip title='Modificar departamento' placement='left-start'>
