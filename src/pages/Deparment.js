@@ -43,7 +43,7 @@ export default function Deparments() {
   const [deps, setDeps] = useState([])
 
   useEffect(() => {
-    if (users.length === 0) {
+    if (deps.length === 0) {
       axios.get(`http://192.168.1.100:8080/departamentos/get`)
       .then(res => {
         console.log('Departamentos:', res.data)

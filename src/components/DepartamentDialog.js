@@ -59,7 +59,7 @@ export default function DepartamentDialog({ dialogType, nameFunction, contentFun
           handleOpen()
         })
     } else if (update && dialogType === 'update') {
-      axios.put(`http://192.168.1.100:8080/departamentos/update/${id}`, {
+      axios.put(`http://192.168.1.100:8080/departamentos/update/id/${Number(id)}`, {
         codigo: codigo,
         nombre: nombre,
         descripcion: descripcion
@@ -170,7 +170,7 @@ export default function DepartamentDialog({ dialogType, nameFunction, contentFun
                 nombre.length < 4 || codigo.length < 4 || descripcion.length < 4               
               }
             >
-              {type === 'add' ? 'Registrar' : 'Guardar'}
+              {dialogType === 'add' ? 'Registrar' : 'Guardar'}
             </Button>
             {
               response !== null ?

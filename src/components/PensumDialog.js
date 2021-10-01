@@ -45,7 +45,7 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen, 
 
   useEffect(() => {
     if (departments.length === 0) {
-      axios.get(`http://192.168.1.100:8080/departamento/get/codes`)
+      axios.get(`http://192.168.1.100:8080/departamentos/get/codes`)
         .then(res => {
           console.log(res.data)
           setDepartments(res.data)
@@ -55,7 +55,7 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen, 
         })
     }
     if (update && type === 'add') {
-      axios.post(`http://192.168.1.100:8080/pensum/add/${programCode}`, {
+      axios.post(`http://192.168.1.100:8080/pensum/add/${programCode}/${codeDepartment}`, {
         codigo: code,
         descripcion: description,
         fecha: new Date()
@@ -74,7 +74,7 @@ export default function PensumDialog({ id, programCode, type, open, handleOpen, 
           handleOpen()
         })
     } else if (update && type === 'update') {
-      axios.put(`http://192.168.1.100:8080/pensum/update/id/${Number(id)}/${programCode}`, {
+      axios.put(`http://192.168.1.100:8080/pensum/update/id/${Number(id)}/${programCode}/${codeDepartment}`, {
         codigo: code,
         descripcion: description,
         fecha: new Date()
