@@ -7,9 +7,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControl,
-  InputLabel,
-  Select,
   Grid,
   useMediaQuery,
   TextField,
@@ -17,9 +14,7 @@ import {
 import { useTheme } from '@material-ui/core/styles'
 import CustomizedSnackbar from './Snackbar'
 
-import RegExp from '../static/RegExp'
-
-export default function DepartamentDialog({ dialogType, nameFunction, contentFunction, open, handleOpen, code, name, desc }) {
+export default function DepartamentDialog({ dialogType, nameFunction, contentFunction, open, handleOpen, id, code, name, desc }) {
 
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -64,7 +59,7 @@ export default function DepartamentDialog({ dialogType, nameFunction, contentFun
           handleOpen()
         })
     } else if (update && dialogType === 'update') {
-      axios.put(`http://192.168.1.100:8080/departamentos/update/${code}`, {
+      axios.put(`http://192.168.1.100:8080/departamentos/update/${id}`, {
         codigo: codigo,
         nombre: nombre,
         descripcion: descripcion
@@ -156,42 +151,6 @@ export default function DepartamentDialog({ dialogType, nameFunction, contentFun
                   }
                   helperText={
                       (descripcion.length !== 0 && descripcion.length < 4) ? 'Debe ingresar una descripción válida' : ''
-                  }c
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  id='user-username'
-                  variant='filled'
-                  label='Usuario'
-                  defaultValue={user}
-                  required
-                  fullWidth
-                  onChange={(e) => setUsername(e.target.value)}
-                  error={
-                    username.length !== 0 && username.length < 4 ? true : false
-                  }
-                  helperText={
-                    username.length !== 0 && username.length < 4 ? 'Debe ingresar un Nombre de Usuario válido' : ''
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  id='user-password'
-                  variant='filled'
-                  label='Contraseña'
-                  defaultValue={pass}
-                  required
-                  fullWidth
-                  onChange={(e) => setPassword(e.target.value)}
-                  error={
-                    (password.length !== 0 && password.length < 8) ? true : false
-                  }
-                  helperText={
-                    (password.length !== 0 && password.length < 8) ? 'Debe ingresar una contraseña válida' : ''
                   }
                 />
               </Grid>
@@ -208,9 +167,7 @@ export default function DepartamentDialog({ dialogType, nameFunction, contentFun
               color='primary'
               autoFocus
               disabled={
-                name.length < 4 || lastname.length < 4 || type === '' ||
-                (type === '1' && codeProgram === '') || email.length < 4 || RegExp.regLetters.test(email)
-                || username.length < 4 || password.length < 8
+                nombre.length < 4 || codigo.length < 4 || descripcion.length < 4               
               }
             >
               {type === 'add' ? 'Registrar' : 'Guardar'}
@@ -219,7 +176,7 @@ export default function DepartamentDialog({ dialogType, nameFunction, contentFun
               response !== null ?
                 <CustomizedSnackbar
                   type={response ? 'success' : !response ? 'error' : 'warning'}
-                  message={response ? 'El usuario se ha registrado con éxito' : !response ? 'No se ha podido modificar el usuario' : 'Cargando...'}
+                  message={response ? 'El departamento se ha registrado con éxito' : !response ? 'No se ha podido modificar el departamento' : 'Cargando...'}
                   open={response}
                   handleClose={handleClose}
                 />

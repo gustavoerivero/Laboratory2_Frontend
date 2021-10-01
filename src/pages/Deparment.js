@@ -10,8 +10,8 @@ import {
 } from '@material-ui/core'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
-import ListItemUser from '../components/ListItemUsers'
-import UserDialog from '../components/UserDialog'
+import ListItemDeps from '../components/ListItemDeps'
+import DepartamentDialog from '../components/DepartamentDialog'
 
 import AddIcon from '@material-ui/icons/Add'
 
