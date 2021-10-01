@@ -14,9 +14,10 @@ import {
 import { useTheme } from '@material-ui/core/styles'
 import CustomizedSnackbar from './Snackbar'
 
-export default function DepartamentDialog({ dialogType, nameFunction, contentFunction, open, handleOpen, id, code, name, desc }) {
+export default function DepartmentDialog({ dialogType, nameFunction, contentFunction, open, handleOpen, id, code, name, desc }) {
 
   const theme = useTheme()
+  
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const [codigo, setCodigo] = useState('')

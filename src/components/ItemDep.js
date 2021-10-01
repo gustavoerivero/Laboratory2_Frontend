@@ -8,12 +8,14 @@ import {
   ListItemText,
   IconButton,
 } from '@material-ui/core'
+import FindInPageIcon from '@material-ui/icons/FindInPage'
 import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
 
 import AlertDialog from './Dialog'
 import CustomizedSnackbar from './Snackbar'
-import DepartamentDialog from './DepartamentDialog'
+import DepartmentDialog from './DepartmentDialog'
+import ViewDepartment from './ViewDepartment'
 
 export default function ItemDep({ key, element }) {
 
@@ -21,6 +23,12 @@ export default function ItemDep({ key, element }) {
 
   const handleOpen = () => {
     setOpen(!open)
+  }
+
+  const [see, setSee] = useState(false)
+
+  const handleSee = () => {
+    setSee(!see)
   }
 
   const [deleteButton, setDeleteButton] = useState(false)
@@ -66,7 +74,12 @@ export default function ItemDep({ key, element }) {
         primary={element.codigo + " / " + element.nombre }
         secondary={'Descripción: ' + element.descripcion}
       />
-      <ListItemSecondaryAction >        
+      <ListItemSecondaryAction >           
+        <Tooltip title='Ver departamento' placement='left-start'>
+          <IconButton edge='start' aria-label='Edit' onClick={handleSee} >
+            <FindInPageIcon />
+          </IconButton>
+        </Tooltip>     
         <Tooltip title='Modificar departamento' placement='left-start'>
           <IconButton edge='middle' aria-label='Edit' onClick={handleOpen} >
             <CreateIcon />
@@ -77,7 +90,14 @@ export default function ItemDep({ key, element }) {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-        <DepartamentDialog
+        <ViewDepartment 
+          code={element.codigo}
+          name={element.nombre}
+          desc={element.descripcion}
+          open={see}
+          handleClose={handleSee}
+        />
+        <DepartmentDialog
           nameFunction='Editar Departamento'
           contentFunction='Ingrese la información del Departamento que desea modificar. 
             El botón de Guardar no se habilitará hasta que ingrese la información requerida.'

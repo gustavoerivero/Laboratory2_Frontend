@@ -11,7 +11,7 @@ import {
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import ListItemDeps from '../components/ListItemDeps'
-import DepartamentDialog from '../components/DepartamentDialog'
+import DepartmentDialog from '../components/DepartmentDialog'
 
 import AddIcon from '@material-ui/icons/Add'
 
@@ -93,7 +93,7 @@ export default function Deparments() {
                 <AddIcon />
               </Fab>
             </Tooltip>
-            <DepartamentDialog
+            <DepartmentDialog
               dialogType='add'
               nameFunction='Agregar Departamento'
               contentFunction='Ingrese la información del departamento a agregar. 
