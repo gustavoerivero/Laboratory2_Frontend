@@ -44,7 +44,7 @@ export default function Users() {
 
   useEffect(() => {
     if (users.length === 0) {
-      axios.get(`http://192.168.1.100:8080/usuario/get`)
+      axios.get(`http://localhost:8080/usuario/get`)
       .then(res => {
         console.log('Usuarios:', res.data)
         setUsers(res.data)
@@ -105,7 +105,7 @@ export default function Users() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} md={11} align='center'>
+        <Grid item xs={12} md={11} align='center' style={{ minHeight: "55.2vh" }}>
           <ListItemUser item={users} />
         </Grid>
 

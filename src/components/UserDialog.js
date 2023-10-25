@@ -51,7 +51,7 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
 
   useEffect(() => {
     if (programs.length === 0) {
-      axios.get(`http://192.168.1.100:8080/programa/get/codes`)
+      axios.get(`http://localhost:8080/programa/get/codes`)
         .then(res => {
           console.log(res.data)
           setPrograms(res.data)
@@ -61,7 +61,7 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
         })
     }
     if (update && dialogType === 'add' && type === '0') {
-      axios.post(`http://192.168.1.100:8080/usuario/add`, {
+      axios.post(`http://localhost:8080/usuario/add`, {
         username: username,
         password: password,
         nombre: name,
@@ -83,7 +83,7 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
           handleOpen()
         })
     } else if (update && dialogType === 'add' && type === '1') {
-      axios.post(`http://192.168.1.100:8080/usuario/add/${codeProgram}`, {
+      axios.post(`http://localhost:8080/usuario/add/${codeProgram}`, {
         username: username,
         password: password,
         nombre: name,
@@ -105,7 +105,7 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
           handleOpen()
         })
     } else if (update && dialogType === 'update' && type === '0') {
-      axios.put(`http://192.168.1.100:8080/usuario/update/${username}`, {
+      axios.put(`http://localhost:8080/usuario/update/${username}`, {
         username: username,
         password: password,
         nombre: name,
@@ -127,7 +127,7 @@ export default function UserDialog({ dialogType, nameFunction, contentFunction, 
           handleOpen()
         })
     } else if (update && dialogType === 'update' && type === '1') {
-      axios.put(`http://192.168.1.100:8080/usuario/update/${username}/${codeProgram}`, {
+      axios.put(`http://localhost:8080/usuario/update/${username}/${codeProgram}`, {
         username: username,
         password: password,
         nombre: name,

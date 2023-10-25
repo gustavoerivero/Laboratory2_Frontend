@@ -25,7 +25,7 @@ export default function ViewPensumDialog({  descFunction, fechaFunction, codigoF
 
   const downloadFile = () => {
     axios({
-      url: `http://192.168.1.100:8080/file/load/${codigoFunction}.pdf`,
+      url: `http://localhost:8080/file/load/${codigoFunction}.pdf`,
       method: 'GET',
       responseType: 'blob',
     })

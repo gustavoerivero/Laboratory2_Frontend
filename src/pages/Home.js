@@ -64,18 +64,18 @@ export default function Home() {
 
   useEffect(() => {
     if (rol === '0' && programs.length === 0) {
-      axios.get(`http://192.168.1.100:8080/programa/get`)
+      axios.get(`http://localhost:8080/programa/get`)
         .then(result => {
           setPrograms(result.data)
         })
         .catch(error => console.log(error))
     } else if (rol === '1' && program.id === 0) {
-      axios.get(`http://192.168.1.100:8080/usuario/get/username/${username}`)
+      axios.get(`http://localhost:8080/usuario/get/username/${username}`)
         .then(result => {
           setUser(result.data)
         })
         .catch(error => console.log(error))
-      axios.get(`http://192.168.1.100:8080/programa/get/codigo/${user.programa.codigo}`)
+      axios.get(`http://localhost:8080/programa/get/codigo/${user.programa.codigo}`)
         .then(result => {
           setProgram(result.data)
         })

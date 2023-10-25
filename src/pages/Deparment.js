@@ -44,7 +44,7 @@ export default function Deparments() {
 
   useEffect(() => {
     if (deps.length === 0) {
-      axios.get(`http://192.168.1.100:8080/departamentos/get`)
+      axios.get(`http://localhost:8080/departamentos/get`)
       .then(res => {
         console.log('Departamentos:', res.data)
         setDeps(res.data)
@@ -105,7 +105,7 @@ export default function Deparments() {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} md={11} align='center'>
+        <Grid item xs={12} md={11} align='center' style={{ minHeight: "55.2vh" }}>
           <ListItemDeps item={deps} />
         </Grid>
 

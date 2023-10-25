@@ -52,7 +52,7 @@ export default function ProgramProfile({ id }) {
 
   useEffect(() => {
     if (id && response === null) {
-      axios.get(`http://192.168.1.100:8080/programa/get/${Number(id)}`)
+      axios.get(`http://localhost:8080/programa/get/${Number(id)}`)
         .then(res => {
           console.log(res.data)
           setProgram(res.data)
@@ -63,7 +63,7 @@ export default function ProgramProfile({ id }) {
           setResponse(false)
         })
     } else if (response === true && pensums.length === 0) {
-      axios.get(`http://192.168.1.100:8080/pensum/get/programa/${program.codigo}`)
+      axios.get(`http://localhost:8080/pensum/get/programa/${program.codigo}`)
         .then(res => {
           console.log(res.data)
           setPensums(res.data)

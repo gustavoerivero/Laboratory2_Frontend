@@ -65,6 +65,7 @@ export default function Footer() {
       <Box
         px={{ xs: 1, sm: 2 }}
         py={{ xs: 1, sm: 1 }}
+        mt={8.5}
         bgcolor='secondary.main'
         color='text.primary'
         className={classes.container}

@@ -41,7 +41,7 @@ export default function DepartmentDialog({ dialogType, nameFunction, contentFunc
 
   useEffect(() => {
     if (update && dialogType === 'add') {
-      axios.post(`http://192.168.1.100:8080/departamentos/add`, {
+      axios.post(`http://localhost:8080/departamentos/add`, {
         codigo: codigo,
         nombre: nombre,
         descripcion: descripcion
@@ -60,7 +60,7 @@ export default function DepartmentDialog({ dialogType, nameFunction, contentFunc
           handleOpen()
         })
     } else if (update && dialogType === 'update') {
-      axios.put(`http://192.168.1.100:8080/departamentos/update/id/${Number(id)}`, {
+      axios.put(`http://localhost:8080/departamentos/update/id/${Number(id)}`, {
         codigo: codigo,
         nombre: nombre,
         descripcion: descripcion

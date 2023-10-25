@@ -61,7 +61,7 @@ export default function ProfileCard({ user }) {
 
   useEffect(() => {
     if (update && response) {
-      axios.put(`http://192.168.1.100:8080/usuario/update/${user.username}` +
+      axios.put(`http://localhost:8080/usuario/update/${user.username}` +
         (user.rol === '0' ? '' : `/${user.programa.codigo}`), {
         username: user.username,
         password: user.password,

@@ -43,7 +43,7 @@ export default function ViewDepartment({ code, name, desc, handleClose, open }) 
 
   useEffect(() => {
     if (response === null) {
-      axios.get(`http://192.168.1.100:8080/pensum/get/departamento/${code}`)
+      axios.get(`http://localhost:8080/pensum/get/departamento/${code}`)
         .then(res => {
           console.log(res.data)
           setPensum(res.data)

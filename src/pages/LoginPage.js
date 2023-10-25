@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   footer: {
-    marginTop: '2em',
+    marginTop: '50px',
   },
 }))
 
@@ -33,7 +33,7 @@ export default function LoginPage() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div style={{ minHeight: "92vh" }}>
       <CssBaseline />
       <NavBar />
       <Grid container justifyContent='center' alignItems='center' className={classes.root}>

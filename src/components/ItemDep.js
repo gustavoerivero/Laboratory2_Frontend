@@ -54,7 +54,7 @@ export default function ItemDep({ key, element }) {
 
   useEffect(() => {
     if (deleteButton) {
-      axios.delete(`http://192.168.1.100:8080/departamentos/delete/${Number(element.id)}`)
+      axios.delete(`http://localhost:8080/departamentos/delete/${Number(element.id)}`)
         .then(res => {
           console.log(res.data)
           handleDelete()

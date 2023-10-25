@@ -44,7 +44,7 @@ export default function Report() {
 
   useEffect(() => {
     if (response === null) {
-      axios.get(`http://192.168.1.100:8080/pensum/get`)
+      axios.get(`http://localhost:8080/pensum/get`)
         .then(res => {
           console.log(res.data)
           setPensums(res.data)

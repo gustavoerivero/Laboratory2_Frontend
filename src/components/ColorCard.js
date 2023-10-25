@@ -81,7 +81,7 @@ export default function ColorCard({ rol, id, title, content, haveColor, color, h
 
   useEffect(() => {
     if (deleteButton) {
-      axios.delete(`http://192.168.1.100:8080/programa/delete/${Number(id)}`)
+      axios.delete(`http://localhost:8080/programa/delete/${Number(id)}`)
         .then(res => {
           console.log(res.data)
           handleDelete()

@@ -69,7 +69,7 @@ export default function Users() {
 
   useEffect(() => {
     if (response === null) {
-      axios.get(`http://192.168.1.100:8080/usuario/get/username/${username}`)
+      axios.get(`http://localhost:8080/usuario/get/username/${username}`)
         .then(res => {
           console.log(res.data)
           setUser(res.data)

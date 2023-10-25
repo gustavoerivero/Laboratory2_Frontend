@@ -41,7 +41,7 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
 
   useEffect(() => {
     if (update && type === 'add') {
-      axios.post(`http://192.168.1.100:8080/programa/add`, {
+      axios.post(`http://localhost:8080/programa/add`, {
         codigo: code,
         nombre: name
       })
@@ -59,7 +59,7 @@ export default function ProgramDialog({ id, open, handleOpen, type, title }) {
           handleOpen()
         })
     } else if (update && type === 'update' && id !== null) {
-      axios.put(`http://192.168.1.100:8080/programa/update/id/${Number(id)}`, {
+      axios.put(`http://localhost:8080/programa/update/id/${Number(id)}`, {
         codigo: code,
         nombre: name,
         status: 'A'
